@@ -4,6 +4,7 @@
 #include <string>
 #include "Image.h"
 #include "GrayScale.h"
+#include "ShadowFinder.h"
 
 int main(int argc, char** argv) {
 	/*=========================     Program parameters     =========================*/
@@ -15,10 +16,10 @@ int main(int argc, char** argv) {
 //	std::string inputName = "TestImage.bmp";
 //	std::string inputName = "Busjes.jpg";
 //	std::string inputName = "BusjesGroot.jpg";
-	std::string inputName = "Waterfall.jpg";
-	
+//	std::string inputName = "Waterfall.jpg";
+	std::string inputName = "test.png";
 
-	bool grayOn = true;
+	bool grayOn = false;
 	
 
 	/*=========================     Program parameters     =========================*/
@@ -42,7 +43,14 @@ int main(int argc, char** argv) {
 		GrayScale gray;
 		gray.CreateGrayScaleImage(originalImage, grayImage);
 		grayImage.SaveImageToFile("GRAY_");
+
 		std::cout << std::endl;
+	}
+
+	if (!grayOn){
+		Image img(originalImage);
+		ShadowFinder shadow;
+		shadow.ShadowTest(originalImage);
 	}
 
 	//Save the original image

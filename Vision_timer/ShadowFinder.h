@@ -5,10 +5,8 @@
 
 class ShadowFinder{
 
-	Image* img;
-	std::string filename;
-
-	ShadowFinder(std::string filename);
+public:
+	ShadowFinder();
 	bool ShadowTest(Image& img);
 
 };
