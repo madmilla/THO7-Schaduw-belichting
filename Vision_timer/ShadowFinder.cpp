@@ -5,18 +5,21 @@ ShadowFinder::ShadowFinder(){
 }
 
 bool ShadowFinder::ShadowTest(Image& img){
-	bool found = false;
-	bool done = false;
-	Image destinationImage("test.png", 5, 5);
+	int PixelVal = 0, NextPixelVal = 0, PrevPixelVal = 0;
+	Image destinationImage("Test.jpg", img.GetWidth(), img.GetHeight());
 
-	for (int y = 0; y < img.GetHeight(); y++){
-		for (int x = 0; x < img.GetWidth(); x++){
-			int PixelVal = (int)((img.GetPixelRed(x, y) * 0.30) + (img.GetPixelGreen(x, y) * 0.59) + (img.GetPixelBlue(x, y) * 0.11));
-			destinationImage.SetPixel(x, y, (PixelVal << redPixelShift) | (PixelVal << greenPixelShift) | (PixelVal << bluePixelShift));
-			//std::cout << PixelVal << ' ' << x << ' ' << y << std::endl;
+	for (int y = 0; y <= img.GetHeight() - 1; y++){
+		for (int x = 0; x <= img.GetWidth() - 1; x++){
+			PrevPixelVal = img.GetPixel((x - 1) % img.GetWidth(), (y - 1) % img.GetHeight());
+			PixelVal = img.GetPixel(x, y);
+			NextPixelVal = img.GetPixel((x + 1) % img.GetWidth(), (y + 1) % img.GetHeight());
+			if (PrevPixelVal > PixelVal && NextPixelVal <= PixelVal && PixelVal >= 0) {
+				destinationImage.SetPixel(x, y, PixelVal);
+				return true;
+			}
 		}
+		
 	}
-	destinationImage.SaveImageToFile("test_");
-	
-	return found;
+	return false;
+	destinationImage.SaveImageToFile("OUTPUT_");
 }
