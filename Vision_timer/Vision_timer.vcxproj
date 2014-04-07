@@ -78,10 +78,12 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ShadowFinder.cpp" />
+    <ClCompile Include="K-Means.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GrayScale.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="K-Means.h" />
     <ClInclude Include="ShadowFinder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
