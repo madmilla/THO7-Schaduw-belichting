@@ -4,8 +4,8 @@
 
 class Filter{
 protected:
-	Image image;//
-	Image editedImage; //editedImage is a image which should be used to 
+	Image image;//original input image
+	Image editedImage; //editedImage is a image which should be used to save the edited image
 public:
 	Filter(Image img){
 		image = img;

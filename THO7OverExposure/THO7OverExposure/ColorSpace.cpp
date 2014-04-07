@@ -164,9 +164,9 @@ void ColorSpace::ToRGB(){
 
 double* ColorSpace::RGBtoXYZ(unsigned char R, unsigned char G, unsigned char B)
 {
-	R = 255;
-	G = 255;
-	B = 0;
+//	R = 255;
+//	G = 255;
+//	B = 0;
 	double var_R = (double)((double)R / (double)255);        //R from 0 to 255
 	double var_G = (double)((double)G / (double)255);        //G from 0 to 255
 	double var_B = (double)((double)B / (double)255);        //B from 0 to 255

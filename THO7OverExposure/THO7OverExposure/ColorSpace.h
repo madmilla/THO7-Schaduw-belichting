@@ -1,6 +1,12 @@
 /*
-Jeroen Huisen
-When it works this file will be cleaned and maded usefull
+	Jeroen Huisen - Schaduw & Belichting
+	Version: 0.1	7-4-2014
+	Summary:		This class will convert colorspace
+	Description:	This class will convert colorspaces. This will be used to convert from rgb to lab and lab to rgb.
+					Before this is possible rgb should be converted to xyz and after that, xyz can be converted to lab.
+					When lab is converted back to rgb doesnt this go in 1 stap. 
+					It also has to be converted from lab to xyz and xyz to rgb.
+					This class is used for overexposure, this class needs lab because the l channel is lightness
 */
 #ifndef COLORSPACE_H
 #define COLORSPACE_H
