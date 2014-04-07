@@ -112,7 +112,7 @@ void Image::SaveImageToFile(std::string prefixName) {
 			}
 		}
 
-		std::cout << (outputLocation + prefixName + fileName).c_str() << std::endl;
+		std::cout << (outputLocation + prefixName + fileName).c_str() << '\n';
 		image->Save(_T((outputLocation + prefixName + fileName).c_str()));
 	}
 }

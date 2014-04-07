@@ -17,8 +17,9 @@ int main(int argc, char** argv) {
 //	std::string inputName = "Busjes.jpg";
 //	std::string inputName = "BusjesGroot.jpg";
 //	std::string inputName = "Waterfall.jpg";
-//	std::string inputName = "Testschaduw..jpg";
-	std::string inputName = "Untitled.jpg";
+//	std::string inputName = "Testschaduw.jpg";
+//	std::string inputName = "license_plate_1.jpg";
+	std::string inputName = "license_plate_2.jpg";
 
 	bool grayOn = false;
 	
@@ -51,7 +52,11 @@ int main(int argc, char** argv) {
 	if (!grayOn){
 		Image img(originalImage);
 		ShadowFinder shadow;
-		shadow.ShadowTest(originalImage);
+		Image grayImage(originalImage);
+		GrayScale gray;
+		gray.CreateGrayScaleImage(originalImage, grayImage);
+		grayImage.SaveImageToFile("GRAY_");
+		std::cout << shadow.ShadowTest(originalImage, 660, 702, 991, 708, 660, 771, 991, 777);
 	}
 
 	//Save the original image
