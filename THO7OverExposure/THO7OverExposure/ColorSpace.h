@@ -17,30 +17,59 @@
 
 class ColorSpace : public Filter{
 private:
-	double* RGBtoXYZ(unsigned char R, unsigned char G, unsigned char B);
-	float* XYZtoLAB(float x, float y, float z);
+	//rgb to xyz
+	float* RGBtoXYZ(unsigned char R, unsigned char G, unsigned char B);
+	//xyz to lab
+	float* XYZtoLAB(float X, float Y, float Z);
+	//xyz to rgb
+	float* XYZtoRGB(float X, float Y, float Z);
+	//lab to rgb
+	float* LABtoRGB(float  L, float  A, float B);
 
-	float * A;
-	float * B;
+	//test function will be deleted
+	float* LABtoRGBTEST(float  L, float  A, float B); 
+
+	float * A;//this is used because A channel goes from -128 to 128 and image class uses unsigned this will be changed
+	float * B;//this is used because B channel goes from -128 to 128 and image class uses unsigned this will be changed
 public:
 	ColorSpace(Image img);
+	//convert rgb to xyz
+	//
+	//Convert rgb to xyz colorspace
 	void ToXYZ();
+	//convert xyz to lab
+	//
+	//Convert xyz to lab colorspace
 	void ToLAB();
+	//convert lab to rgb
+	//
+	//Convert lab to rgb, intern lab is converted to xyz and xyz to rgb
 	void ToRGB();
 	
+	//returns A
 	float * getA(){
 		return A;
 	}
+	//returns B
 	float * getB(){
 		return B;
 	}
 
+	//set A
+	//
+	//Change A to Ab
 	void setA(float * Ab){
 		A = Ab;
 	}
+	//set G
+	//
+	//Change B to Bb
 	void setB(float * Bb){
 		B = Bb;
 	}
+	//test
+	//
+	//Test function which will be deleted in the official release.
 	void Test();
 };
 #endif
