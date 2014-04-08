@@ -153,7 +153,7 @@ float * ColorSpace::LABtoRGBTEST(float  L, float  A, float B)
 void ColorSpace::ToRGB(){
 	for (int y = 0; y < image.Height(); y++){
 		for (int x = 0; x < image.Width(); x++){
-			float* test = LABtoRGBTEST(*image.Data(x, y, 0), A[x+x*y], *(B + x +x*y));
+			float* test = LABtoRGBTEST(*image.Data(x, y, 0), A[x + image.Width()*y], B[x + image.Width()*y]);
 			//float* test = LABtoRGBTEST(*image.Data(x, y, 0),0,0);
 			*editedImage.Data(x, y, 0) = test[0];
 			*editedImage.Data(x, y, 1) = test[1];
@@ -204,7 +204,7 @@ float* ColorSpace::RGBtoXYZ(unsigned char R, unsigned char G, unsigned char B)
 	float * returnValue = new float[3];
 	returnValue[0] = var_R * 0.4124564 + var_G * 0.3575761 + var_B * 0.1804375;
 	returnValue[1] = var_R * 0.2126729 + var_G * 0.7151522 + var_B * 0.0721750;
-	returnValue[2] = var_R * 0*.0193339 + var_G * 0.1191920 + var_B * 0.9503041;
+	returnValue[2] = var_R * 0.0193339 + var_G * 0.1191920 + var_B * 0.9503041;
 
  
 	return returnValue;
@@ -269,12 +269,15 @@ float * ColorSpace::XYZtoLAB(float x, float y, float z)
 void ColorSpace::ToLAB(){
 	for (int y = 0; y < image.Height(); y++){
 		for (int x = 0; x < image.Width(); x++){
+			//std::cout << "rgb: " << (int)*image.Data(x, y, 0) << "\n" << (int)*image.Data(x, y, 1) << "\n" << (int)*image.Data(x, y, 2) << "\n\n";
 			float* test = RGBtoXYZ(*image.Data(x, y, 0), *image.Data(x, y, 1), *image.Data(x, y, 2));
+			//std::cout << "rgb to xyz: "<< test[0] << "\n" << test[1] << "\n" << test[2] << "\n\n";
 			float* test2 = XYZtoLAB(test[0], test[1], test[2]);
-			A[x + x*y] = test2[1];
-			*(B + x + x*y) = test2[2];
+			//std::cout << "xyz to lab: "<< test2[0] << "\n" << test2[1] << "\n" << test2[2] << "\n\n";
+			A[x + image.Width()*y] = test2[1];
+			B[x + image.Width()*y] = test2[2];
 			*editedImage.Data(x, y, 0) = test2[0];
-			*editedImage.Data(x, y, 1) = test2[1];
+			*editedImage.Data(x, y, 1) = test2[1];	
 			*editedImage.Data(x, y, 2) = test2[2];
 		}
 	}
@@ -290,7 +293,7 @@ void ColorSpace::Test(){
 	float* test = RGBtoXYZ(*image.Data(100, 100, 0), *image.Data(100, 100, 1), *image.Data(100, 100, 2));
 	*/
 
-	float * test = RGBtoXYZ(255, 20, 255);
+	float * test = RGBtoXYZ(240, 0, 0);
 	std::cout << "\nRGB to XYZ:\n";
 	std::cout << test[0] << "\n";
 	std::cout << test[1] << "\n";

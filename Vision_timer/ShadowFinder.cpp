@@ -16,6 +16,7 @@ bool ShadowFinder::ShadowTest(Image& Img, int TopLeftX, int TopLeftY, int TopRig
 	int GrayValue, PrevPrevGrayValue, PrevGrayValue, NextGrayValue;
 	int totalPixels = LicenseplateHeight * LicenseplateWidth;
 	Image outputImage("Test.jpg", Width, Height);
+
 	int i = 0;
 	for (int y = TopLeftY ; y <= LicenseplateHeight; y++){
 		for (int x = TopLeftX + 2; x <= LicenseplateWidth; x++){
@@ -46,11 +47,11 @@ bool ShadowFinder::ShadowTest(Image& Img, int TopLeftX, int TopLeftY, int TopRig
 
 	outputImage.SaveImageToFile("OUTPUT_");
 	if (i < totalPixels / totalPixels * 2){
-		std::cout << "NEEEEE" << std::endl;
+		std::cout << "false" << std::endl;
 		return false;
 	}
 	else {
-		std::cout << "JAAAAA" << std::endl;
+		std::cout << "true" << std::endl;
 		return true;
 	}
 

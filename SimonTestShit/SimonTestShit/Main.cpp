@@ -30,5 +30,6 @@ int main(){
 	// or
 	*img->data(5, 2, Channel::Red) = 255;
 	saveImg(*img, "test.jpg");
+	std::cin.ignore();
 	cout << "FUCK" << endl;
 }

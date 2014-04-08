@@ -21,7 +21,7 @@ void OverExposure::M(){
 		}
 	}
 	
-	//editedImage.SaveImage("testM.bmp");
+	editedImage.SaveImage("testM.bmp");
 }
 
 void OverExposure::ThresholdFunction(int threshold){
@@ -45,18 +45,19 @@ void OverExposure::ThresholdFunction(int threshold){
 	//editedImage.SaveImage("testOverExposureThreshold.bmp");
 }
 
-void OverExposure::ThresholdRepair(int threshold){
+void OverExposure::ThresholdRepair(int threshold, int power){
 	for (int y = 0; y < image.Height(); y++){
 		for (int x = 0; x < image.Width(); x++){
 			int Li = *image.Data(x, y, 0);
 			if (Li > threshold){ //if higher than threshold lower lightness of pixel
-				*editedImage.Data(x, y, 0) = Li - threshold/10; //Not a complete repair but will lower the lightness
+				*editedImage.Data(x, y, 0) = Li - power; //Not a complete repair but will lower the lightness
+				//*editedImage.Data(x, y, 0) = 0; //this is overexposed show.
 				*editedImage.Data(x, y, 1) = *image.Data(x, y, 1);//just copy image channels
 				*editedImage.Data(x, y, 2) = *image.Data(x, y, 2);
 			}
-			else if (Li > threshold - Li / 10){ //if its lower than threshold but higher than edited ligthness is changed into.
+			else if (Li > threshold - power){ //if its lower than threshold but higher than edited ligthness is changed into.
 												//This makes sure its not higher than edited lightness value.
-				*editedImage.Data(x, y, 0) = Li - (Li - ( threshold - threshold / 10));
+				*editedImage.Data(x, y, 0) = Li - (Li - ( threshold - power));
 				*editedImage.Data(x, y, 1) = *image.Data(x, y, 1);//just copy image channels
 				*editedImage.Data(x, y, 2) = *image.Data(x, y, 2);
 			}
@@ -70,5 +71,34 @@ void OverExposure::ThresholdRepair(int threshold){
 
 	//editedImage.SaveImage("testOverExposureThresholdRepair.bmp");
 }
+
+
+void OverExposure::ThresholdRepairOpposite(int threshold){
+	for (int y = 0; y < image.Height(); y++){
+		for (int x = 0; x < image.Width(); x++){
+			int Li = *image.Data(x, y, 0);
+			if (Li < threshold){ //if higher than threshold lower lightness of pixel
+				//*editedImage.Data(x, y, 0) = Li + threshold / 7; //Not a complete repair but will lower the lightness
+				*editedImage.Data(x, y, 0) = 100; //this is overexposed show.
+				*editedImage.Data(x, y, 1) = *image.Data(x, y, 1);//just copy image channels
+				*editedImage.Data(x, y, 2) = *image.Data(x, y, 2);
+			}
+			else if (Li < threshold + threshold / 7){ //if its lower than threshold but higher than edited ligthness is changed into.
+				//This makes sure its not higher than edited lightness value.
+				*editedImage.Data(x, y, 0) = Li + (Li - (threshold - threshold / 7));
+				*editedImage.Data(x, y, 1) = *image.Data(x, y, 1);//just copy image channels
+				*editedImage.Data(x, y, 2) = *image.Data(x, y, 2);
+			}
+			else{//In anyother case keep the default lightness
+				*editedImage.Data(x, y, 0) = Li;
+				*editedImage.Data(x, y, 1) = *image.Data(x, y, 1);//just copy image channels
+				*editedImage.Data(x, y, 2) = *image.Data(x, y, 2);
+			}
+		}
+	}
+
+	//editedImage.SaveImage("testOverExposureThresholdRepair.bmp");
+}
+
 
 

@@ -43,6 +43,9 @@ public:
 	//This function will detect if a value is higher than the threshold.
 	//When a value is higher this will be repaired. 
 	//This makes sure the lightness will get lower, a high lightness will mean it is overexposed.
-	void ThresholdRepair(int threshold);
+	void ThresholdRepair(int threshold, int power);
+
+
+	void ThresholdRepairOpposite(int threshold);
 };
 #endif
