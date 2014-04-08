@@ -1,7 +1,6 @@
 // Arthur van der Weiden
 
 #include "Image.h"
-#include <string>
 
 #define YELLOWGRAY 50
 #define BLACKGRAY 200
