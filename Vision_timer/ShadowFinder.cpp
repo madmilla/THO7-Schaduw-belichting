@@ -46,11 +46,11 @@ bool ShadowFinder::ShadowTest(Image& Img, int TopLeftX, int TopLeftY, int TopRig
 
 	outputImage.SaveImageToFile("OUTPUT_");
 	if (i < totalPixels / totalPixels * 2){
-		std::cout << "NEEEEE" << std::endl;
+		std::cout << "false" << std::endl;
 		return false;
 	}
 	else {
-		std::cout << "JAAAAA" << std::endl;
+		std::cout << "true" << std::endl;
 		return true;
 	}
 

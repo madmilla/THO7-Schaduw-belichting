@@ -13,7 +13,6 @@
 
 #ifndef OVEREXPOSURE_H
 #define OVEREXPOSURE_H
-#include "ImageV2.h"	//Image class used will be replaced by another one as soon as possible
 #include "Filter.h"		//Filter class is used for having 2 images 1 as input (image) and 1 as output(editedImage)
 #include <math.h>		//Used for the pow function
 
@@ -24,7 +23,7 @@ public:
 	//
 	//Img is the input image, on this image the overexposure will be "removed".
 	//Img should have the first channel (0) as L range from 0 till 100
-	OverExposure(Image img);
+	OverExposure(ImageRGB img);
 
 	//Repair image overexposure
 	//
