@@ -19,7 +19,7 @@ int main(){
 	//std::cout << shadow.ShadowSearch("license_plate_5.jpg", 212, 281, 382, 318);
 	//std::cout << shadow.ShadowSearch("license_plate_6.jpg", 1377, 1473, 2224, 1509);
 	//std::cout << shadow.ShadowSearch("license_plate_7.jpg", 398, 388, 1193, 537);
-	std::cout << shadow.ShadowSearch("license_plate_8.jpg", 1796, 1518, 2562, 1447, 1815, 1692, 2580, 1630);
+	//std::cout << shadow.ShadowSearch("license_plate_8.jpg", 1796, 1518, 2562, 1447, 1815, 1692, 2580, 1630);
 	//std::cout << shadow.ShadowSearch("license_plate_9.jpg", 108, 191, 698, 235);
 	//std::cout << shadow.ShadowSearch("license_plate_10.jpg", 718, 802, 1847, 964);
 	//std::cout << shadow.ShadowSearch("license_plate_11.jpg", 656, 1326, 1001, 1402);
@@ -29,6 +29,6 @@ int main(){
 	//std::cout << shadow.ShadowSearch("license_plate_ex_5.jpg", 145, 145, 605, 235);
 	//std::cout << shadow.ShadowSearch("license_plate_ex_6.jpg", 187, 213, 265, 230);
 	//std::cout << shadow.ShadowSearch("license_plate_ex_7.jpg", 129, 185, 208, 208);
-	system("Kip.jpg");
+	system("Output.jpg");
 	std::cin.ignore();
 }
