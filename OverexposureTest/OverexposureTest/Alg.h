@@ -1,9 +1,13 @@
-#ifndef ALG
-#define ALG
+#ifndef OVEREXPOSURE_TEST
+#define OVEREXPOSURE_TEST
 
-class Alg{
+#include <ImageLoader.h>
+
+using namespace ImageLib;
+
+class Overexposure_Test{
 public:
-	Alg();
-	void Gradiant(int threshold, int l_b_x, int l_b_y, int r_b_x, int r_b_y, int r_o_x, int r_o_y, int l_o_x, int l_o_y);
+	Overexposure_Test();;
+	bool Overexposure_Detection(std::shared_ptr<ImageRGB> img, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY);
 };
 #endif
