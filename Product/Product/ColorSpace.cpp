@@ -8,8 +8,8 @@ and http://www.brucelindbloom.com/index.html?Equations.html
 #include "ColorSpace.h"
 
 ColorSpace::ColorSpace(ImageRGB img):Filter(img){
-	A = new float[img.height() * img.width()];
-	B = new float[img.height() * img.width()];
+//	A = new float[img.height() * img.width()];
+//	B = new float[img.height() * img.width()];
 }
 
 float * ColorSpace::XYZtoRGB(float X, float Y, float Z)
@@ -86,8 +86,8 @@ float * ColorSpace::XYZtoRGB(float X, float Y, float Z)
 float * ColorSpace::LABtoRGB(float  L, float  A, float B)
 {
 	float y = (L + 16.0) / 116.0;
-	float x = A / 500.0 + y;
-	float z = y - B / 200.0;
+	float x = (A -128)/ 500.0 + y;
+	float z = y - (B -128)/ 200.0;
 
 	//std::cout << x << "\n" << y << "\n" << z << "\n\n";
 
@@ -152,19 +152,22 @@ float * ColorSpace::LABtoRGBTEST(float  L, float  A, float B)
 void ColorSpace::ToRGB(){
 	for (int y = 0; y < image->height(); y++){
 		for (int x = 0; x < image->width(); x++){
-			float* test = LABtoRGBTEST(*image->data(x, y, Channel::Red), A[x + image->width()*y], B[x + image->width()*y]);
-			*editedImage->data(x, y, Channel::Red) = test[0];
+		//	float* test = LABtoRGBTEST(*image->data(x, y, Channel::Red), A[x + image->width()*y], B[x + image->width()*y]);
+		/*	*editedImage->data(x, y, Channel::Red) = test[0];
 			*editedImage->data(x, y, Channel::Green) = test[1];
 			*editedImage->data(x, y, Channel::Blue) = test[2];
-
+			*/
 		}
 	}
 }
 
 void ColorSpace::ToRGB(int xmin, int ymin, int xmax, int ymax){
 	for (int y = ymin; y < ymax; y++){
+		*image->data(xmin, y, Channel::Red);
+
 		for (int x = xmin; x < xmax; x++){
-			float* test = LABtoRGBTEST(*image->data(x, y, Channel::Red), A[x + image->width()*y], B[x + image->width()*y]);
+			//float* test = LABtoRGBTEST(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green)-128, *image->data(x, y, Channel::Blue)-128);
+			float* test = LABtoRGBTEST(*L, *A - 128, *B- 128);
 			*editedImage->data(x, y, Channel::Red) = test[0];
 			*editedImage->data(x, y, Channel::Green) = test[1];
 			*editedImage->data(x, y, Channel::Blue) = test[2];
@@ -292,8 +295,8 @@ void ColorSpace::ToLAB(){
 			//std::cout << "rgb to xyz: "<< test[0] << "\n" << test[1] << "\n" << test[2] << "\n\n";
 			float* test2 = XYZtoLAB(test[0], test[1], test[2]);
 			//std::cout << "xyz to lab: "<< test2[0] << "\n" << test2[1] << "\n" << test2[2] << "\n\n";
-			A[x + image->width()*y] = test2[1];
-			B[x + image->width()*y] = test2[2];
+			//A[x + image->width()*y] = test2[1];
+			//B[x + image->width()*y] = test2[2];
 			*editedImage->data(x, y, Channel::Red) = test2[0];
 			*editedImage->data(x, y, Channel::Green) = test2[1];	
 			*editedImage->data(x, y, Channel::Blue) = test2[2];
@@ -309,11 +312,11 @@ void ColorSpace::ToLAB(int xmin, int ymin, int xmax, int ymax){
 			//std::cout << "rgb to xyz: "<< test[0] << "\n" << test[1] << "\n" << test[2] << "\n\n";
 			float* test2 = XYZtoLAB(test[0], test[1], test[2]);
 			//std::cout << "xyz to lab: "<< test2[0] << "\n" << test2[1] << "\n" << test2[2] << "\n\n";
-			A[x + image->width()*y] = test2[1];
-			B[x + image->width()*y] = test2[2];
+			//A[x + image->width()*y] = test2[1];
+			//B[x + image->width()*y] = test2[2];
 			*editedImage->data(x, y, Channel::Red) = test2[0];
-			//*editedImage->data(x, y, Channel::Green) = test2[1];
-			//*editedImage->data(x, y, Channel::Blue) = test2[2];
+			*editedImage->data(x, y, Channel::Green) = test2[1]+128;
+			*editedImage->data(x, y, Channel::Blue) = test2[2]+128;
 		}
 	}
 }
@@ -339,6 +342,9 @@ void ColorSpace::Test(){
 	std::cout << test2[0] << "\n";
 	std::cout << test2[1] << "\n";
 	std::cout << test2[2] << "\n";
+	std::cout << test2[0] << "\n";
+	std::cout << test2[1]+128 << "\n";
+	std::cout << test2[2]+128 << "\n";
 
 	std::cout << "\nLAB to RGB:\n";
 	/*float* test3 = LABtoRGB(test2[0], test2[1], test2[2]);
@@ -351,4 +357,5 @@ void ColorSpace::Test(){
 	std::cout << test3[0] << "\n";
 	std::cout << test3[1] << "\n";
 	std::cout << test3[2] << "\n";
+
 }

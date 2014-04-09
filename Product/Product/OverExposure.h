@@ -46,6 +46,7 @@ public:
 	void ThresholdRepair(int threshold, int power, int xmin, int ymin, int xmax, int ymax);
 
 
-	void ThresholdRepairOpposite(int threshold);
+	void ThresholdRepairOpposite(int threshold, int lowest, int power);
+	void ThresholdRepairOpposite(int threshold, int lowest, int power, int xmin, int ymin, int xmax, int ymax);
 };
 #endif

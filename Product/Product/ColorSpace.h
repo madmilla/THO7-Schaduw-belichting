@@ -28,8 +28,8 @@ private:
 	//test function will be deleted
 	float* LABtoRGBTEST(float  L, float  A, float B); 
 
-	float * A;//this is used because A channel goes from -128 to 128 and image class uses unsigned this will be changed
-	float * B;//this is used because B channel goes from -128 to 128 and image class uses unsigned this will be changed
+	//float * A;//this is used because A channel goes from -128 to 128 and image class uses unsigned this will be changed
+	//float * B;//this is used because B channel goes from -128 to 128 and image class uses unsigned this will be changed
 public:
 	ColorSpace(ImageRGB img);
 	//convert rgb to xyz
@@ -64,7 +64,7 @@ public:
 
 
 
-	
+	/*
 	//returns A
 	float * getA(){
 		return A;
@@ -85,7 +85,7 @@ public:
 	//Change B to Bb
 	void setB(float * Bb){
 		B = Bb;
-	}
+	}*/
 	//test
 	//
 	//Test function which will be deleted in the official release.

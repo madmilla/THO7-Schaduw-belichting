@@ -97,33 +97,59 @@ void OverExposure::ThresholdRepair(int threshold, int power){
 	//editedImage->SaveImage("testOverExposureThresholdRepair->bmp");
 }
 
-/*
-void OverExposure::ThresholdRepairOpposite(int threshold){
-	for (int y = 0; y < image->Height(); y++){
-		for (int x = 0; x < image->Width(); x++){
-			int Li = *image->Data(x, y, 0);
-			if (Li < threshold){ //if higher than threshold lower lightness of pixel
+void OverExposure::ThresholdRepairOpposite(int threshold, int lowest, int power){
+	for (int y = 0; y < image->height(); y++){
+		for (int x = 0; x < image->width(); x++){
+			int Li = *image->data(x, y, Channel::Red);
+			if (Li < threshold && Li > lowest){ //if higher than threshold lower lightness of pixel
 				//*editedImage->Data(x, y, 0) = Li + threshold / 7; //Not a complete repair but will lower the lightness
-				*editedImage->Data(x, y, 0) = 100; //this is overexposed show->
-				*editedImage->Data(x, y, 1) = *image->Data(x, y, 1);//just copy image channels
-				*editedImage->Data(x, y, 2) = *image->Data(x, y, 2);
+				*editedImage->data(x, y, Channel::Red) = 100; //Not a complete repair but will lower the lightness
+				//*editedImage->Data(x, y, 0) = 0; //this is overexposed show->
+				*editedImage->data(x, y, Channel::Green) = *image->data(x, y, Channel::Green);//just copy image channels
+				*editedImage->data(x, y, Channel::Blue) = *image->data(x, y, Channel::Blue);
 			}
-			else if (Li < threshold + threshold / 7){ //if its lower than threshold but higher than edited ligthness is changed into->
+			else if (Li < threshold + power && Li > lowest){ //if its lower than threshold but higher than edited ligthness is changed into->
 				//This makes sure its not higher than edited lightness value->
-				*editedImage->Data(x, y, 0) = Li + (Li - (threshold - threshold / 7));
-				*editedImage->Data(x, y, 1) = *image->Data(x, y, 1);//just copy image channels
-				*editedImage->Data(x, y, 2) = *image->Data(x, y, 2);
+				*editedImage->data(x, y, Channel::Red) = Li + (Li - (threshold - power));
+				*editedImage->data(x, y, Channel::Green) = *image->data(x, y, Channel::Green);//just copy image channels
+				*editedImage->data(x, y, Channel::Blue) = *image->data(x, y, Channel::Blue);
 			}
 			else{//In anyother case keep the default lightness
-				*editedImage->Data(x, y, 0) = Li;
-				*editedImage->Data(x, y, 1) = *image->Data(x, y, 1);//just copy image channels
-				*editedImage->Data(x, y, 2) = *image->Data(x, y, 2);
+				*editedImage->data(x, y, Channel::Red) = Li;
+				*editedImage->data(x, y, Channel::Green) = *image->data(x, y, Channel::Green);//just copy image channels
+				*editedImage->data(x, y, Channel::Blue) = *image->data(x, y, Channel::Blue);
 			}
 		}
 	}
 
-	//editedImage->SaveImage("testOverExposureThresholdRepair->bmp");
+	//editedImage->SaveImage("testOverExposureThresholdRepair.bmp");
 }
 
-*/
+void OverExposure::ThresholdRepairOpposite(int threshold, int lowest, int power, int xmin, int ymin, int xmax, int ymax){
+	for (int y = ymin; y < ymax; y++){
+		for (int x = xmin; x < xmax; x++){
+			int Li = *image->data(x, y, Channel::Red);
+			if (Li < threshold && Li > lowest){ //if higher than threshold lower lightness of pixel
+				//*editedImage->Data(x, y, 0) = Li + threshold / 7; //Not a complete repair but will lower the lightness
+				*editedImage->data(x, y, Channel::Red) = 100; //Not a complete repair but will lower the lightness
+				//*editedImage->Data(x, y, 0) = 0; //this is overexposed show->
+				*editedImage->data(x, y, Channel::Green) = *image->data(x, y, Channel::Green);//just copy image channels
+				*editedImage->data(x, y, Channel::Blue) = *image->data(x, y, Channel::Blue);
+			}
+			else if (Li < threshold + power && Li > lowest){ //if its lower than threshold but higher than edited ligthness is changed into.
+				//This makes sure its not higher than edited lightness value->
+				*editedImage->data(x, y, Channel::Red) = 80;
+				*editedImage->data(x, y, Channel::Green) = *image->data(x, y, Channel::Green);//just copy image channels
+				*editedImage->data(x, y, Channel::Blue) = *image->data(x, y, Channel::Blue);
+			}
+			else{//In anyother case keep the default lightness
+				*editedImage->data(x, y, Channel::Red) = Li;
+				*editedImage->data(x, y, Channel::Green) = *image->data(x, y, Channel::Green);//just copy image channels
+				*editedImage->data(x, y, Channel::Blue) = *image->data(x, y, Channel::Blue);
+			}
+		}
+	}
+
+	//editedImage->SaveImage("testOverExposureThresholdRepair.bmp");
+}
 
