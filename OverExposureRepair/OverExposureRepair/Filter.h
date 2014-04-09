@@ -27,6 +27,11 @@ public:
 		image = std::make_shared<ImageRGB>(rgb_img);
 	}
 
+	/*~Filter(){
+		delete &editedImage;
+		delete &image;
+	}*/
+
 	std::shared_ptr<ImageRGB> getImage(){//Return image
 		cout << "\nimg" << editedImage->height() << "\n";
 		cout << "bagger" <<image->height();

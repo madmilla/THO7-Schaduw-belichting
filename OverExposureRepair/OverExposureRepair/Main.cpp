@@ -15,9 +15,7 @@ int main(){
 	ImageRGB test(*img);
 	cout<<img->height();
 	ColorSpace cs(test);
-	Filter f(test);
-	cout<<f.getImage()->height();
-	cout<<cs.getImage()->height();
+
 	cs.ToLAB();
 	OverExposure oe(*cs.getEditedImage());
 	oe.ThresholdRepair(90, 20);
