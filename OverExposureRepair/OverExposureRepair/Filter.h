@@ -12,27 +12,36 @@ using namespace ImageLib;
 
 class Filter{
 protected:
-	ImageRGB image;//original input image
-	ImageRGB editedImage; //editedImage is a image which should be used to save the edited image
+	//ImageRGB* image;//original input image
+	//ImageRGB* editedImage; //editedImage is a image which should be used to save the edited image
+	std::shared_ptr<ImageRGB> editedImage;
+	std::shared_ptr<ImageRGB> image;
 public:
-	Filter(ImageRGB img){
-		image = img;
-		editedImage = ImageRGB(img.width(), img.height()); //Make a new empty image with same dimensions and channels
+	Filter(ImageRGB rgb_img){
+		editedImage = std::make_shared<ImageRGB>(rgb_img.width(), rgb_img.height());
+		/*cout<<rgb_img.height();
+		image = &rgb_img;
+		cout << image->height();
+		ImageRGB test((int)rgb_img.width(), (int)rgb_img.height(), rgb_img.data(0,0,Channel::Red));
+		editedImage = &test;*/
+		image = std::make_shared<ImageRGB>(rgb_img);
 	}
 
-	ImageRGB getImage(){//Return image
+	std::shared_ptr<ImageRGB> getImage(){//Return image
+		cout << "\nimg" << editedImage->height() << "\n";
+		cout << "bagger" <<image->height();
 		return image;
 	}
-	ImageRGB getEditedImage(){//Return editedImage
+	std::shared_ptr<ImageRGB> getEditedImage(){//Return editedImage
 		return editedImage;
 	}
 
 	void Copy(){//Copy data from image to editedImage
-		for (int y = 0; y < image.height(); y++){
-			for (int x = 0; x < image.width(); x++){
-				*editedImage.data(x, y, Channel::Red) = *image.data(x, y, Channel::Red);
-				*editedImage.data(x, y, Channel::Green) = *image.data(x, y, Channel::Green);
-				*editedImage.data(x, y, Channel::Blue) = *image.data(x, y, Channel::Blue);
+		for (int y = 0; y < image->height(); y++){
+			for (int x = 0; x < image->width(); x++){
+				*editedImage->data(x, y, Channel::Red) = *image->data(x, y, Channel::Red);
+				*editedImage->data(x, y, Channel::Green) = *image->data(x, y, Channel::Green);
+				*editedImage->data(x, y, Channel::Blue) = *image->data(x, y, Channel::Blue);
 			}
 		}
 	}

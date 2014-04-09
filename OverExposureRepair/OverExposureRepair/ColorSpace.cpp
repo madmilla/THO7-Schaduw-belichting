@@ -150,13 +150,13 @@ float * ColorSpace::LABtoRGBTEST(float  L, float  A, float B)
 }
 
 void ColorSpace::ToRGB(){
-	for (int y = 0; y < image.height(); y++){
-		for (int x = 0; x < image.width(); x++){
-			float* test = LABtoRGBTEST(*image.data(x, y, Channel::Red), A[x + image.width()*y], B[x + image.width()*y]);
-			//float* test = LABtoRGBTEST(*image.Data(x, y, 0),0,0);
-			*editedImage.data(x, y, Channel::Red) = test[0];
-			*editedImage.data(x, y, Channel::Green) = test[1];
-			*editedImage.data(x, y, Channel::Blue) = test[2];
+	for (int y = 0; y < image->height(); y++){
+		for (int x = 0; x < image->width(); x++){
+			float* test = LABtoRGBTEST(*image->data(x, y, Channel::Red), A[x + image->width()*y], B[x + image->width()*y]);
+			//float* test = LABtoRGBTEST(*image->Data(x, y, 0),0,0);
+			*editedImage->data(x, y, Channel::Red) = test[0];
+			*editedImage->data(x, y, Channel::Green) = test[1];
+			*editedImage->data(x, y, Channel::Blue) = test[2];
 
 		}
 	}
@@ -209,12 +209,12 @@ float* ColorSpace::RGBtoXYZ(unsigned char R, unsigned char G, unsigned char B)
 }
 
 void ColorSpace::ToXYZ(){
-	for (int y = 0; y < image.height(); y++){
-		for (int x = 0; x < image.width(); x++){
-			float* test = RGBtoXYZ(*image.data(x, y, Channel::Red), *image.data(x, y, Channel::Green), *image.data(x, y, Channel::Blue));
-			*editedImage.data(x, y, Channel::Red) = test[0];
-			*editedImage.data(x, y, Channel::Green) = test[1];
-			*editedImage.data(x, y, Channel::Blue) = test[2];
+	for (int y = 0; y < image->height(); y++){
+		for (int x = 0; x < image->width(); x++){
+			float* test = RGBtoXYZ(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green), *image->data(x, y, Channel::Blue));
+			*editedImage->data(x, y, Channel::Red) = test[0];
+			*editedImage->data(x, y, Channel::Green) = test[1];
+			*editedImage->data(x, y, Channel::Blue) = test[2];
 		}
 	}
 }
@@ -264,18 +264,19 @@ float * ColorSpace::XYZtoLAB(float x, float y, float z)
 }
 
 void ColorSpace::ToLAB(){
-	for (int y = 0; y < image.height(); y++){
-		for (int x = 0; x < image.width(); x++){
-			//std::cout << "rgb: " << (int)*image.Data(x, y, 0) << "\n" << (int)*image.Data(x, y, 1) << "\n" << (int)*image.Data(x, y, 2) << "\n\n";
-			float* test = RGBtoXYZ(*image.data(x, y, Channel::Red), *image.data(x, y, Channel::Green), *image.data(x, y, Channel::Blue));
+	cout<<image->height();
+	for (int y = 0; y < image->height(); y++){
+		for (int x = 0; x < image->width(); x++){
+			//std::cout << "rgb: " << (int)*image->Data(x, y, 0) << "\n" << (int)*image->Data(x, y, 1) << "\n" << (int)*image->Data(x, y, 2) << "\n\n";
+			float* test = RGBtoXYZ(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green), *image->data(x, y, Channel::Blue));
 			//std::cout << "rgb to xyz: "<< test[0] << "\n" << test[1] << "\n" << test[2] << "\n\n";
 			float* test2 = XYZtoLAB(test[0], test[1], test[2]);
 			//std::cout << "xyz to lab: "<< test2[0] << "\n" << test2[1] << "\n" << test2[2] << "\n\n";
-			A[x + image.width()*y] = test2[1];
-			B[x + image.width()*y] = test2[2];
-			*editedImage.data(x, y, Channel::Red) = test2[0];
-			*editedImage.data(x, y, Channel::Green) = test2[1];	
-			*editedImage.data(x, y, Channel::Blue) = test2[2];
+			A[x + image->width()*y] = test2[1];
+			B[x + image->width()*y] = test2[2];
+			*editedImage->data(x, y, Channel::Red) = test2[0];
+			*editedImage->data(x, y, Channel::Green) = test2[1];	
+			*editedImage->data(x, y, Channel::Blue) = test2[2];
 		}
 	}
 }
