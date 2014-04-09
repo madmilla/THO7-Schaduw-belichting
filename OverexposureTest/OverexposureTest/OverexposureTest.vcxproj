@@ -120,12 +120,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Alg.cpp" />
+    <ClCompile Include="Overexposure_Test.cpp" />
     <ClCompile Include="BaseTimer.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Alg.h" />
+    <ClInclude Include="Overexposure_Test.h" />
     <ClInclude Include="BaseTimer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
