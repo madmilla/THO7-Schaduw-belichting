@@ -5,8 +5,6 @@ OverExposure::OverExposure(ImageRGB img) :Filter(img){
 
 }
 
-
-
 void OverExposure::M(){
 	//based on http://www->comp->nus->edu->sg/~tsim/documents/cvpr2010-final-reduced->pdf
 	//The implementation isn't done so it will not produce usefull results->
