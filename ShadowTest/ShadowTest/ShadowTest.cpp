@@ -12,7 +12,7 @@ bool ShadowTest::Shadow_Detection(std::shared_ptr<ImageRGB> img, int TopLeftX, i
 		TopSmallY = TopLeftY;
 	}else {
 		TopBigY = TopLeftY;
-		TopSmallY = TopRightY;;
+		TopSmallY = TopRightY;
 	}
 	if (BottomLeftY < BottomRightY){
 		BottomBigY = BottomRightY;
