@@ -4,6 +4,13 @@
 #include <string>
 #include <iostream>
 
+	// File: testExceptions.h
+	// @Author Lars Veenendaal 1633223
+	// 0.1 - Skeleton setup
+
+	// Used for testing purposes
+	// Primarily on how to handle scenarios/exceptions.
+
 class testExceptions{
 private:
 	std::string m_strError;
@@ -11,10 +18,7 @@ private:
 public:
 	testExceptions(std::string strError) : m_strError(strError)
 	{
-		if (strError == "IMAGE_NOT_FOUND"){
-			std::cout << "IMAGE_NOT_FOUND" << std::endl;
-		}
-		
+		// None yet.
 	}
 
 	std::string GetError() { return m_strError; }

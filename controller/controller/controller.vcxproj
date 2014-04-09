@@ -22,6 +22,8 @@
     <ProjectGuid>{CD222EE3-1E4E-4F64-97C2-72A9AE56C57D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>controller</RootNamespace>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -141,22 +143,37 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Example.cpp" />
+    <ClCompile Include="general.cpp" />
+    <ClCompile Include="shadow_lighting.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="allExceptions.h" />
+    <ClInclude Include="distortionExceptions.h" />
     <ClInclude Include="example.h" />
+    <ClInclude Include="general.h" />
+    <ClInclude Include="generalExceptions.h" />
+    <ClInclude Include="localizationExceptions.h" />
+    <ClInclude Include="OCRExceptions.h" />
+    <ClInclude Include="shadow_lighting.h" />
+    <ClInclude Include="shadowExceptions.h" />
+    <ClInclude Include="stopwatch.h" />
     <ClInclude Include="testExceptions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\imagelib.0.5\build\native\imagelib.targets" Condition="Exists('..\packages\imagelib.0.5\build\native\imagelib.targets')" />
+    <Import Project="..\packages\libtimer.0.1\build\native\libtimer.targets" Condition="Exists('..\packages\libtimer.0.1\build\native\libtimer.targets')" />
+    <Import Project="..\packages\imagelib.0.6\build\native\imagelib.targets" Condition="Exists('..\packages\imagelib.0.6\build\native\imagelib.targets')" />
+    <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\imagelib.0.5\build\native\imagelib.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\imagelib.0.5\build\native\imagelib.targets'))" />
+    <Error Condition="!Exists('..\packages\libtimer.0.1\build\native\libtimer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtimer.0.1\build\native\libtimer.targets'))" />
+    <Error Condition="!Exists('..\packages\imagelib.0.6\build\native\imagelib.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\imagelib.0.6\build\native\imagelib.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
 </Project>
