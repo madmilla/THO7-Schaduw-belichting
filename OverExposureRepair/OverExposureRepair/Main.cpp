@@ -4,30 +4,26 @@
 #include <numeric>
 #include <ImageLoader.h>
 #include <memory>
+#include "ColorSpace.h"
+#include "OverExposure.h"
 
 using namespace ImageLib;
 using namespace std;
 
 int main(){
-	unique_ptr<ImageRGB> img = loadImg("alex.jpg");
+	unique_ptr<ImageRGB> img = loadImg("DSC_0006.jpg");
+	ImageRGB test(*img);
+	cout<<img->height();
+	ColorSpace cs(test);
 
-	img->at(5, 2, Channel::Red) = 255;
-	int width = img->width();
-	for (int w = 0; w < img->width(); w++){
-		for (int h = 0; h < img->height(); h++){
-			img->at(w, h).red = 255;
-			img->at(w, h).green = 0;
-			img->at(w, h).blue = 0;
-		}
-	}
-	// or
-	img->at(5, 2).red = 255;
+	cs.ToLAB();
+	OverExposure oe(*cs.getEditedImage());
+	oe.ThresholdRepair(90, 20);
+	ColorSpace cs2(*oe.getEditedImage());
+	cs2.setA(cs.getA());
+	cs2.setB(cs.getB());
+	cs2.ToRGB();
 
-	// with pointers:
-
-	*(img->data(5, 2).red) = 255;
-	// or
-	*img->data(5, 2, Channel::Red) = 255;
-	saveImg(*img, "test.jpg");
-	cout << "FUCK" << endl;
+	ImageRGB output(*cs2.getEditedImage());
+	saveImg(output, "output.jpg");
 }

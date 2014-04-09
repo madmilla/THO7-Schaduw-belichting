@@ -1,12 +1,10 @@
 // Arthur van der Weiden
-#pragma once
-#include <ImageLib.h>
-#include <iostream>
-#include <fstream>
-#include <array>
-#include <numeric>
+
+#ifndef SHADOW_TEST
+#define SHADOW_TEST
+
 #include <ImageLoader.h>
-#include <memory>
+#define YELLOWGRAY 60
 
 using namespace ImageLib;
 
@@ -19,6 +17,7 @@ private:
 public:
 
 	ShadowTest(){}
-	bool ShadowSearch(std::string FileName, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY,int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY);
+	bool Shadow_Detection(std::shared_ptr<ImageRGB> img, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY);
 
 };
+#endif
