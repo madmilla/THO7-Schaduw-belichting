@@ -141,9 +141,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseTimer.h" />
     <ClInclude Include="ShadowTest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseTimer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ShadowTest.cpp" />
   </ItemGroup>
