@@ -8,8 +8,6 @@ and http://www.brucelindbloom.com/index.html?Equations.html
 #include "ColorSpace.h"
 
 ColorSpace::ColorSpace(ImageRGB img):Filter(img){
-//	A = new float[img.height() * img.width()];
-//	B = new float[img.height() * img.width()];
 }
 
 float * ColorSpace::XYZtoRGB(float X, float Y, float Z)
@@ -153,7 +151,7 @@ void ColorSpace::ToRGB(){
 	for (int y = 0; y < image->height(); y++){
 		for (int x = 0; x < image->width(); x++){
 		//	float* test = LABtoRGBTEST(*image->data(x, y, Channel::Red), A[x + image->width()*y], B[x + image->width()*y]);
-		/*	*editedImage->data(x, y, Channel::Red) = test[0];
+		/*		*editedImage->data(x, y, Channel::Red) = test[0];
 			*editedImage->data(x, y, Channel::Green) = test[1];
 			*editedImage->data(x, y, Channel::Blue) = test[2];
 			*/
@@ -163,11 +161,12 @@ void ColorSpace::ToRGB(){
 
 void ColorSpace::ToRGB(int xmin, int ymin, int xmax, int ymax){
 	for (int y = ymin; y < ymax; y++){
-		*image->data(xmin, y, Channel::Red);
-
+		unsigned char *L = image->data(0, y, Channel::Red);
+		unsigned char *A = image->data(0, y, Channel::Green);
+		unsigned char *B = image->data(0, y, Channel::Blue);
 		for (int x = xmin; x < xmax; x++){
 			//float* test = LABtoRGBTEST(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green)-128, *image->data(x, y, Channel::Blue)-128);
-			float* test = LABtoRGBTEST(*L, *A - 128, *B- 128);
+			float* test = LABtoRGBTEST(*(L+x), *(A+x) - 128, *(B+x)- 128);
 			*editedImage->data(x, y, Channel::Red) = test[0];
 			*editedImage->data(x, y, Channel::Green) = test[1];
 			*editedImage->data(x, y, Channel::Blue) = test[2];
