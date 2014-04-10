@@ -15,13 +15,84 @@ using namespace std;
 
 
 void testert(std::shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY, int value){
-	int* histogramR = new int[9];
-	int* histogramG = new int[9];
-	int* histogramB = new int[9];
-	auto samples = image->data(TopLeftX, TopLeftY);
-	histogramR[*samples.red]++;
+	int meanRTopL = 0;
+	int meanGTopL = 0;
+	int meanBTopL = 0;
 
 
+	for (int y = TopLeftY; y < TopLeftY + 3; y++){
+		auto samples = image->data(TopLeftX, y);
+		for (int x = TopLeftX; x < TopLeftX + 3; x++){
+			meanRTopL += *samples.red;
+			meanGTopL += *samples.green;
+			meanBTopL += *samples.blue;
+			samples.red++;
+			samples.green++;
+			samples.blue++;
+		}
+	}
+	meanRTopL /= 9;
+	meanGTopL /= 9;
+	meanBTopL /= 9;
+
+	int meanRTopR = 0;
+	int meanGTopR = 0;
+	int meanBTopR = 0;
+
+	
+	for (int y = TopRightY; y < TopLeftY + 3; y++){
+		auto samples = image->data(TopRightX, y);
+		for (int x = TopRightX; x < TopLeftX + 3; x++){
+			meanRTopL += *samples.red;
+			meanGTopL += *samples.green;
+			meanBTopL += *samples.blue;
+			samples.red--;
+			samples.green--;
+			samples.blue--;
+		}
+	}
+	meanRTopR /= 9;
+	meanGTopR /= 9;
+	meanBTopR /= 9;
+
+	int meanRBottomL = 0;
+	int meanGBottomL = 0;
+	int meanBBottomL = 0;
+
+	for (int y = BottomLeftY; y > BottomLeftY - 3; y--){
+		auto samples = image->data(BottomLeftX,y);
+		for (int x = BottomLeftX; x < BottomLeftX + 3; x++){
+			meanRBottomL += *samples.red;
+			meanGBottomL += *samples.green;
+			meanBBottomL += *samples.blue;
+			samples.red++;
+			samples.green++;
+			samples.blue++;
+		}
+	}
+	meanRBottomL /= 9;
+	meanGBottomL /= 9;
+	meanBBottomL /= 9;
+
+	int meanRBottomR = 0;
+	int meanGBottomR = 0;
+	int meanBBottomR = 0;
+
+	for (int y = BottomRightY; y > BottomRightY - 3; y--){
+		auto samples = image->data(BottomRightX, y);
+		for (int x = BottomRightX; x < BottomRightX + 3; x++){
+			meanRBottomR += *samples.red;
+			meanGBottomR += *samples.green;
+			meanBBottomR += *samples.blue;
+			samples.red--;
+			samples.green--;
+			samples.blue--;
+		}
+	}
+	meanRBottomR /= 9;
+	meanGBottomR /= 9;
+	meanBBottomR /= 9;
+		
 
 	//some easy and ugly max and min
 	int tempA = max(TopLeftX, TopRightX);
