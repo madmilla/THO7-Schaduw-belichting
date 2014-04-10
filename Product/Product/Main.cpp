@@ -14,7 +14,30 @@ using namespace ImageLib;
 using namespace std;
 
 
-void testert(std::shared_ptr<ImageRGB> image, int xmin, int ymin, int xmax, int ymax, int value){
+void testert(std::shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY, int value){
+	int* histogramR = new int[9];
+	int* histogramG = new int[9];
+	int* histogramB = new int[9];
+	auto samples = image->data(TopLeftX, TopLeftY);
+	histogramR[*samples.red]++;
+
+
+
+	//some easy and ugly max and min
+	int tempA = max(TopLeftX, TopRightX);
+	int tempB = max(BottomLeftX, BottomRightX);
+	int xmax  = max(tempA, tempB);
+	tempA	  = min(TopLeftX, TopRightX);
+	tempB	  = min(BottomLeftX, BottomRightX);
+	int xmin = min(tempA, tempB);
+
+	tempA = max(TopLeftY, TopRightY);
+	tempB = max(BottomLeftY, BottomRightY);
+	int ymax = max(tempA, tempB);
+	tempA = min(TopLeftY, TopRightY);
+	tempB = min(BottomLeftY, BottomRightY);
+	int ymin = min(tempA, tempB);
+
 	for (int y = ymin; y < ymax; y++){
 		for (int x = xmin; x < xmax; x++){
 			auto rgb_ptrs = image->data(x, y);
@@ -26,10 +49,47 @@ void testert(std::shared_ptr<ImageRGB> image, int xmin, int ymin, int xmax, int 
 			float C = (1 - Rx-K) / (1-K);
 			float M = (1 - Gx-K) / (1-K);
 			float Y = (1 - Bx-K) / (1-K);
-			if (Y < 0.5){
-				Y = 0.5;
-			}
-			//cout << (int)*rgb_ptrs.red << "\n";
+			//if (Y < 0.5){
+				//Y = 1;
+			//}
+			/*if (Y > 0.5 && K < 0.5){
+				Y = 1;
+				K = 0;
+			*/
+			
+				if (K < 0.1 && Y > 0.1){
+					C = 0;
+					M = 0;
+					Y = 1;
+					K = 0;
+				}
+				else if (K < 0.05 && Y < 0.1 && C < 0.1 && M < 0.1){
+					C = 0;
+					M = 0;
+					Y = 1;
+					K = 0;
+				}
+				else if (K < 0.5 && Y < 0.1){
+					C = 0;
+					M = 0;
+					Y = 0;
+					K = 1;
+				}
+
+				else if (K < 0.5 && Y > 0.5){
+					C = 0;
+					M = 0;
+					Y = 1;
+					K = 0;
+				}
+				else if (K > 0.5 && Y < 0.2){
+					C = 0;
+					M = 0;
+					Y = 0;
+					K = 1;
+				}
+							
+				//cout << (int)*rgb_ptrs.red << "\n";
 			*rgb_ptrs.red = 255 * (1 - C) * (1 - K);
 			*rgb_ptrs.green = 255 * (1 - M) * (1 - K);
 			*rgb_ptrs.blue = 255 * (1 - Y) * (1 - K);
@@ -91,7 +151,8 @@ int main(){
 	bt.reset();
 	bt.start();
 	if (st.Shadow_Detection(img, 663, 617, 3873, 1361, 601, 1201, 3625, 2305) == true){
-		testert(img, 601, 617, 3873, 2305, st.getDarkestFoundPixel());
+		testert(img, 663, 617, 3873, 1361, 601, 1201, 3625, 2305, st.getDarkestFoundPixel());
+		//testert(img, 1796, 1447, 2580, 1692, st.getDarkestFoundPixel());
 		cout << "shadow\n";
 		/*ColorSpace cs(test2);
 		cs.Copy();
