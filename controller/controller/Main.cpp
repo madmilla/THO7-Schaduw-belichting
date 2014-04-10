@@ -4,6 +4,8 @@
 #include <exception>
 #include "general.h"
 #include "shadow_lighting.h"
+#include "ColorSpace.h"
+#include "overexposure.h"
 #include "stopwatch.h"
 #include "allExceptions.h"
 
@@ -36,6 +38,9 @@ int main(int argc, char* argv[]){
 	img = loadImg(filename); // if all is well this work fine now.
 
 	timeKeeper.printTimePast();
+
+
+
 	// Lokalisatie
 	try{
 		//Gets the img.
@@ -53,19 +58,42 @@ int main(int argc, char* argv[]){
 	// Shadow & Lighting
 	Shadow_Lighting snl;
 	shared_ptr<ImageRGB> snl_img = img;
-	ImageRGB * snl_img_rgb = snl_img.get();
-
+	ImageRGB snl_img_rgb(*img);
 	try{
 		// Get the img.
-		snl.checkForDefects(snl_img_rgb, 1);
+		snl.Overexposure_Detection(snl_img_rgb, 1796, 1518, 2562, 1447, 1815, 1692, 2580, 1630);
+
+		/*
+		shared_ptr<ImageRGB> img2 = loadImg("output1.jpg");
+		ImageRGB test2(*img2);
+		if (snl.Shadow_Detection(img2, 1796, 1518, 2562, 1447, 1815, 1692, 2580, 1630) == true){
+			cout << "shadow\n";
+			ColorSpace cs(test2);
+			cs.Copy();
+			cs.ToLAB(1796, 1447, 2580, 1692);
+			OverExposure oe(*cs.getEditedImage());
+			oe.Copy();
+			oe.ThresholdRepairOpposite(20, 60, 90, 1796, 1447, 2580, 1692);
+			ColorSpace cs2(*oe.getEditedImage());
+			cs2.Copy();
+			cs2.ToRGB(1796, 1447, 2580, 1692);
+			ImageRGB output(*cs2.getEditedImage());
+			saveImg(output, "output2.jpg");
+		}
+
+		saveImg(*img, "output.jpg");
+		//snl.checkForDefects(snl_img_rgb, 1);
 		// Gives back the original image or a modified version.
+		*/
 	} 
 	catch (ShadowExceptions sE){
 		if (sE.GetError() == "SHADOW"){
-			snl.ApplyShadowFiltering();
+			cout << "WHOOOP" << endl;
+			//	snl.ApplyShadowFiltering();
 		}
 		if (sE.GetError() == "OVEREXPOSED"){
-			snl.ApplyLightingFiltering();
+			cout << "WHOOOP" << endl;
+			//	snl.ApplyShadowFiltering();
 		}
 	}
 	cout << "Shadow and lighting done: ";
