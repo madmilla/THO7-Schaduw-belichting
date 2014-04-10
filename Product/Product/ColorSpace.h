@@ -10,11 +10,13 @@
 */
 #ifndef COLORSPACE_H
 #define COLORSPACE_H
-#include "Filter.h"
+#include <ImageLoader.h>
 #include <math.h>
 #include <iostream>
 
-class ColorSpace : public Filter{
+using namespace ImageLib;
+
+class ColorSpace{
 private:
 	//rgb to xyz
 	inline float* RGBtoXYZ(unsigned char R, unsigned char G, unsigned char B);
@@ -31,61 +33,22 @@ private:
 	//float * A;//this is used because A channel goes from -128 to 128 and image class uses unsigned this will be changed
 	//float * B;//this is used because B channel goes from -128 to 128 and image class uses unsigned this will be changed
 public:
-	ColorSpace(ImageRGB img);
-	//convert rgb to xyz
-	//
-	//Convert rgb to xyz colorspace
-	void ToXYZ();
-	//convert xyz to lab
-	//
-	//Convert xyz to lab colorspace
-	void ToLAB();
-	//convert lab to rgb
-	//
-	//Convert lab to rgb, intern lab is converted to xyz and xyz to rgb
-	void ToRGB();
-
+	ColorSpace();
 
 
 	//Convert rgb to xyz colorspace
-	void ToXYZ(int xmin, int ymin, int xmax, int ymax);
+	void ToXYZ(std::shared_ptr<ImageRGB> image, int xmin, int ymin, int xmax, int ymax);
 	//convert xyz to lab
 	//
 	//Convert xyz to lab colorspace
-	void ToLAB(int xmin, int ymin, int xmax, int ymax);
+	void ToLAB(std::shared_ptr<ImageRGB> img, int xmin, int ymin, int xmax, int ymax);
 	//convert lab to rgb
 	//
 	//Convert lab to rgb, intern lab is converted to xyz and xyz to rgb
-	void ToRGB(int xmin, int ymin, int xmax, int ymax);
+	void ToRGB(std::shared_ptr<ImageRGB> img, int xmin, int ymin, int xmax, int ymax);
 
 
 
-
-
-
-
-	/*
-	//returns A
-	float * getA(){
-		return A;
-	}
-	//returns B
-	float * getB(){
-		return B;
-	}
-
-	//set A
-	//
-	//Change A to Ab
-	void setA(float * Ab){
-		A = Ab;
-	}
-	//set G
-	//
-	//Change B to Bb
-	void setB(float * Bb){
-		B = Bb;
-	}*/
 	//test
 	//
 	//Test function which will be deleted in the official release.

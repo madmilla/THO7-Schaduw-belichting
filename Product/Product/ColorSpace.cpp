@@ -7,7 +7,7 @@ and http://www.brucelindbloom.com/index.html?Equations.html
 
 #include "ColorSpace.h"
 
-ColorSpace::ColorSpace(ImageRGB img):Filter(img){
+ColorSpace::ColorSpace(){
 }
 
 float * ColorSpace::XYZtoRGB(float X, float Y, float Z)
@@ -147,19 +147,8 @@ float * ColorSpace::LABtoRGBTEST(float  L, float  A, float B)
 	return XYZtoRGB(X, Y, Z);
 }
 
-void ColorSpace::ToRGB(){
-	for (int y = 0; y < image->height(); y++){
-		for (int x = 0; x < image->width(); x++){
-		//	float* test = LABtoRGBTEST(*image->data(x, y, Channel::Red), A[x + image->width()*y], B[x + image->width()*y]);
-		/*		*editedImage->data(x, y, Channel::Red) = test[0];
-			*editedImage->data(x, y, Channel::Green) = test[1];
-			*editedImage->data(x, y, Channel::Blue) = test[2];
-			*/
-		}
-	}
-}
 
-void ColorSpace::ToRGB(int xmin, int ymin, int xmax, int ymax){
+void ColorSpace::ToRGB(std::shared_ptr<ImageRGB> image, int xmin, int ymin, int xmax, int ymax){
 	for (int y = ymin; y < ymax; y++){
 		unsigned char *L = image->data(0, y, Channel::Red);
 		unsigned char *A = image->data(0, y, Channel::Green);
@@ -167,10 +156,9 @@ void ColorSpace::ToRGB(int xmin, int ymin, int xmax, int ymax){
 		for (int x = xmin; x < xmax; x++){
 			//float* test = LABtoRGBTEST(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green)-128, *image->data(x, y, Channel::Blue)-128);
 			float* test = LABtoRGBTEST(*(L+x), *(A+x) - 128, *(B+x)- 128);
-			*editedImage->data(x, y, Channel::Red) = test[0];
-			*editedImage->data(x, y, Channel::Green) = test[1];
-			*editedImage->data(x, y, Channel::Blue) = test[2];
-
+			*(L + x) = test[0];
+			*(A + x) = test[1];
+			*(B + x) = test[2];
 		}
 	}
 }
@@ -219,24 +207,17 @@ float* ColorSpace::RGBtoXYZ(unsigned char R, unsigned char G, unsigned char B)
 	return returnValue;
 }
 
-void ColorSpace::ToXYZ(){
-	for (int y = 0; y < image->height(); y++){
-		for (int x = 0; x < image->width(); x++){
-			float* test = RGBtoXYZ(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green), *image->data(x, y, Channel::Blue));
-			*editedImage->data(x, y, Channel::Red) = test[0];
-			*editedImage->data(x, y, Channel::Green) = test[1];
-			*editedImage->data(x, y, Channel::Blue) = test[2];
-		}
-	}
-}
-
-void ColorSpace::ToXYZ(int xmin, int ymin, int xmax, int ymax){
+void ColorSpace::ToXYZ(std::shared_ptr<ImageRGB> image, int xmin, int ymin, int xmax, int ymax){
 	for (int y = ymin; y < ymax; y++){
+		unsigned char *R = image->data(0, y, Channel::Red);
+		unsigned char *G = image->data(0, y, Channel::Green);
+		unsigned char *B = image->data(0, y, Channel::Blue);
 		for (int x = xmin; x < xmax; x++){
-			float* test = RGBtoXYZ(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green), *image->data(x, y, Channel::Blue));
-			*editedImage->data(x, y, Channel::Red) = test[0];
-			*editedImage->data(x, y, Channel::Green) = test[1];
-			*editedImage->data(x, y, Channel::Blue) = test[2];
+			//float* test = RGBtoXYZ(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green), *image->data(x, y, Channel::Blue));
+			float* test = LABtoRGBTEST(*(R + x), *(G + x) - 128, *(B + x) - 128);
+			*(R + x) = test[0];
+			*(G + x) = test[1];
+			*(B + x) = test[2];
 		}
 	}
 }
@@ -285,37 +266,19 @@ float * ColorSpace::XYZtoLAB(float x, float y, float z)
 	return	returnValue;
 }
 
-void ColorSpace::ToLAB(){
-	cout<<image->height();
-	for (int y = 0; y < image->height(); y++){
-		for (int x = 0; x < image->width(); x++){
-			//std::cout << "rgb: " << (int)*image->Data(x, y, 0) << "\n" << (int)*image->Data(x, y, 1) << "\n" << (int)*image->Data(x, y, 2) << "\n\n";
-			float* test = RGBtoXYZ(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green), *image->data(x, y, Channel::Blue));
-			//std::cout << "rgb to xyz: "<< test[0] << "\n" << test[1] << "\n" << test[2] << "\n\n";
-			float* test2 = XYZtoLAB(test[0], test[1], test[2]);
-			//std::cout << "xyz to lab: "<< test2[0] << "\n" << test2[1] << "\n" << test2[2] << "\n\n";
-			//A[x + image->width()*y] = test2[1];
-			//B[x + image->width()*y] = test2[2];
-			*editedImage->data(x, y, Channel::Red) = test2[0];
-			*editedImage->data(x, y, Channel::Green) = test2[1];	
-			*editedImage->data(x, y, Channel::Blue) = test2[2];
-		}
-	}
-}
-
-void ColorSpace::ToLAB(int xmin, int ymin, int xmax, int ymax){
+void ColorSpace::ToLAB(std::shared_ptr<ImageRGB> image, int xmin, int ymin, int xmax, int ymax){
 	for (int y = ymin; y < ymax; y++){
+		unsigned char *R = image->data(0, y, Channel::Red);
+		unsigned char *G = image->data(0, y, Channel::Green);
+		unsigned char *B = image->data(0, y, Channel::Blue);
 		for (int x = xmin; x < xmax; x++){
-			//std::cout << "rgb: " << (int)*image->Data(x, y, 0) << "\n" << (int)*image->Data(x, y, 1) << "\n" << (int)*image->Data(x, y, 2) << "\n\n";
-			float* test = RGBtoXYZ(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green), *image->data(x, y, Channel::Blue));
-			//std::cout << "rgb to xyz: "<< test[0] << "\n" << test[1] << "\n" << test[2] << "\n\n";
+
+			//float* test = RGBtoXYZ(*image->data(x, y, Channel::Red), *image->data(x, y, Channel::Green), *image->data(x, y, Channel::Blue));
+			float* test = RGBtoXYZ(*(R + x), *(G + x) - 128, *(B + x) - 128);
 			float* test2 = XYZtoLAB(test[0], test[1], test[2]);
-			//std::cout << "xyz to lab: "<< test2[0] << "\n" << test2[1] << "\n" << test2[2] << "\n\n";
-			//A[x + image->width()*y] = test2[1];
-			//B[x + image->width()*y] = test2[2];
-			*editedImage->data(x, y, Channel::Red) = test2[0];
-			*editedImage->data(x, y, Channel::Green) = test2[1]+128;
-			*editedImage->data(x, y, Channel::Blue) = test2[2]+128;
+			*(R + x) = test2[0];
+			*(G + x) = test2[1] + 128;
+			*(B + x) = test2[2] + 128;
 		}
 	}
 }
