@@ -35,13 +35,16 @@ bool ShadowTest::Shadow_Detection(std::shared_ptr<ImageRGB> img, int TopLeftX, i
 	for (int x = TopLeftX + 1; x <= LicensePlateWidth; x++){
 		for (int y = TopSmallY + 1; y <= BottomBigY; y++){
 			Grayval = (*rgb_ptrs.red * 0.21) + (*rgb_ptrs.blue * 0.71) + (*rgb_ptrs.green * 0.07);
+			rgb_ptrs.red++;
+			rgb_ptrs.blue++;
+			rgb_ptrs.green++;
 			if ((int)Grayval < (int)Darkest){
 				Darkest = Grayval;
 				setDarkestFoundPixel(Darkest);
 			}
 		}
 	}
-
+	rgb_ptrs = img->data(TopLeftX + 1, TopLeftY + 1);
 	for (int x = TopLeftX + 1; x <= LicensePlateWidth; x++){
 		for (int y = TopSmallY + 1; y <= BottomBigY; y++){
 			Grayval = (*rgb_ptrs.red * 0.21) + (*rgb_ptrs.blue * 0.71) + (*rgb_ptrs.green * 0.07);
