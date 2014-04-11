@@ -147,6 +147,8 @@
     <ClCompile Include="Localization\localization.cpp" />
     <ClCompile Include="Localization\YellowColorFilter.cpp" />
     <ClCompile Include="Example.cpp" />
+    <ClCompile Include="OCR1\OCRPatternMatching.cpp" />
+    <ClCompile Include="OCR1\SplitLicensePlate.cpp" />
     <ClCompile Include="OCR2\FileData.cpp" />
     <ClCompile Include="OCR2\OCR2_Histogram.cpp" />
     <ClCompile Include="OCR2\OCR2_HistogramOCR.cpp" />
@@ -186,6 +188,8 @@
     <ClInclude Include="Localization\BlobDetection.h" />
     <ClInclude Include="Localization\localization.h" />
     <ClInclude Include="Localization\YellowColorFilter.h" />
+    <ClInclude Include="OCR1\OCRPatternMatching.h" />
+    <ClInclude Include="OCR1\SplitLicensePlate.h" />
     <ClInclude Include="OCR2\FileData.h" />
     <ClInclude Include="OCR2\OCR2_Histogram.h" />
     <ClInclude Include="OCR2\OCR2_HistogramOCR.h" />
