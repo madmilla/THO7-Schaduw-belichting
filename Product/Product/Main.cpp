@@ -24,7 +24,7 @@ using namespace std;
 }*/
 
 int main(){
-	shared_ptr<ImageRGB> img = loadImg("license_plate_ex_5.jpg");
+	shared_ptr<ImageRGB> img = loadImg("license_plate_81.jpg");
 	ImageRGB test(*img);
 	ShadowTest st;
 
@@ -36,7 +36,7 @@ int main(){
 	BaseTimer bt;
 	//bt.start();
 	Overexposure_Test OT;
-	if (OT.Overexposure_Detection(img, 145, 145, 605, 137, 155, 240, 605, 235) == true){
+	if (OT.Overexposure_Detection(img, 1796, 1518, 2562, 1447, 1815, 1692, 2580, 1630) == true){
 		cout << "overexposure\n";
 		/*BaseTimer bt;
 		bt.start();
@@ -69,9 +69,9 @@ int main(){
 	cout << bt.elapsedSeconds();
 	bt.reset();
 	bt.start();
-	if (st.Shadow_Detection(img, 145, 145, 605, 137, 155, 240, 605, 235) == true){
+	if (st.Shadow_Detection(img, 1796, 1518, 2562, 1447, 1815, 1692, 2580, 1630) == true){
 		RemoveLight rl;
-		rl.Remove(img, 145, 145, 605, 137, 155, 240, 605, 235);
+		rl.Remove(img, 1796, 1518, 2562, 1447, 1815, 1692, 2580, 1630);
 		//testert(img, 1796, 1447, 2580, 1692, st.getDarkestFoundPixel());
 		cout << "shadow\n";
 		/*ColorSpace cs(test2);

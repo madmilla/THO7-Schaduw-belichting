@@ -14,14 +14,16 @@ using namespace ImageLib;
 using namespace std;
 
 
-void Shadow_Lighting::checkForDefects(ImageRGB img, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY){
+void Shadow_Lighting::checkForDefects(shared_ptr<ImageRGB> img, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY){
 	Overexposure_Test ot;
 	RemoveLight rl;
 	if (ot.Overexposure_Detection(img, TopLeftX, TopLeftY, TopRightX, TopRightY, BottomLeftX, BottomLeftY, BottomRightX, BottomRightY) == true){
+		cout << "Overexposure\n";
 		rl.ApplyLightingFiltering(img, TopLeftX, TopLeftY, TopRightX, TopRightY, BottomLeftX, BottomLeftY, BottomRightX, BottomRightY);
 	}
 	ShadowTest st;
 	if (st.Shadow_Detection(img, TopLeftX, TopLeftY, TopRightX, TopRightY, BottomLeftX, BottomLeftY, BottomRightX, BottomRightY) == true){
+		cout << "Shadow\n";
 		rl.ApplyShadowFiltering(img, TopLeftX, TopLeftY, TopRightX, TopRightY, BottomLeftX, BottomLeftY, BottomRightX, BottomRightY);
 	}
 }

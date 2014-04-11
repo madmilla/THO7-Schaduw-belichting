@@ -141,20 +141,20 @@ void RemoveLight::Remove(std::shared_ptr<ImageRGB> image, int TopLeftX, int TopL
 				Y = 0;
 				K = 1;
 			}
-			else if (K < yellowLastKValue + 0.3 && Y > yellowLastYValue - 0.1){
+			/*else if (K < yellowLastKValue + 0.3 && Y > yellowLastYValue - 0.1){
 				yellowLastYValue = Y;
 				yellowLastKValue = K;
 				C = 0;
 				M = 0;
-				Y = 0;
+				Y = 1;
 				K = 0;
-			}
+			}*/
 			else if (K < 0.1 && Y > 0.1){ //geel
 				yellowLastYValue = Y;
 				yellowLastKValue = K;
-				C = 1;
+				C = 0;
 				M = 0;
-				Y = 0;
+				Y = 1;
 				K = 0;
 			}
 			else if (K < 0.05 && Y < 0.1 && C < 0.1 && M < 0.1){ //wit

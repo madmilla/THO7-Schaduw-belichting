@@ -23,7 +23,7 @@ class Shadow_Lighting{
 private:
 
 public:
-	void checkForDefects(ImageRGB, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY);
+	void checkForDefects(shared_ptr<ImageRGB> img, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY);
 };
 #endif
 

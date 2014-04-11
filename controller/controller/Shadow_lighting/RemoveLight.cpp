@@ -4,7 +4,7 @@ RemoveLight::RemoveLight(){
 
 }
 
-void RemoveLight::ApplyLightingFiltering(ImageRGB image, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY){
+void RemoveLight::ApplyLightingFiltering(shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY){
 	/*int meanRTopL = 0;
 	int meanGTopL = 0;
 	int meanBTopL = 0;
@@ -115,7 +115,7 @@ void RemoveLight::ApplyLightingFiltering(ImageRGB image, int TopLeftX, int TopLe
 		int blackLastYValue = 0;
 		int blackLastKValue = 0;
 		for (int x = xmin; x < xmax; x++){
-			auto rgb_ptrs = image.data(x, y);
+			auto rgb_ptrs = image->data(x, y);
 
 			float Rx = (float)*rgb_ptrs.red / 255;
 			float Gx = (float)*rgb_ptrs.green / 255;
@@ -141,20 +141,20 @@ void RemoveLight::ApplyLightingFiltering(ImageRGB image, int TopLeftX, int TopLe
 				Y = 0;
 				K = 1;
 			}
-			else if (K < yellowLastKValue + 0.3 && Y > yellowLastYValue - 0.1){
+			/*else if (K < yellowLastKValue + 0.3 && Y > yellowLastYValue - 0.1){
 				yellowLastYValue = Y;
 				yellowLastKValue = K;
 				C = 0;
 				M = 0;
 				Y = 0;
 				K = 0;
-			}
+			}*/
 			else if (K < 0.1 && Y > 0.1){ //geel
 				yellowLastYValue = Y;
 				yellowLastKValue = K;
-				C = 1;
+				C = 0;
 				M = 0;
-				Y = 0;
+				Y = 1;
 				K = 0;
 			}
 			else if (K < 0.05 && Y < 0.1 && C < 0.1 && M < 0.1){ //wit
