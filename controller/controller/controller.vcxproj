@@ -164,9 +164,9 @@
     <ClCompile Include="Rotation\matrix.cpp" />
     <ClCompile Include="Rotation\Matrix6x6.cpp" />
     <ClCompile Include="Rotation\thresholdDetermination.cpp" />
-    <ClCompile Include="Shadow_lighting\colorspace.cpp" />
-    <ClCompile Include="Shadow_lighting\filter.cpp" />
-    <ClCompile Include="Shadow_lighting\overexposure.cpp" />
+    <ClCompile Include="Shadow_lighting\Overexposure_Test.cpp" />
+    <ClCompile Include="Shadow_lighting\RemoveLight.cpp" />
+    <ClCompile Include="Shadow_lighting\ShadowTest.cpp" />
     <ClCompile Include="Shadow_lighting\shadow_lighting.cpp" />
     <ClCompile Include="Util\general.cpp" />
   </ItemGroup>
@@ -206,9 +206,9 @@
     <ClInclude Include="Rotation\matrix.h" />
     <ClInclude Include="Rotation\Matrix6x6.h" />
     <ClInclude Include="Rotation\thresholdDetermination.h" />
-    <ClInclude Include="Shadow_lighting\colorspace.h" />
-    <ClInclude Include="Shadow_lighting\filter.h" />
-    <ClInclude Include="Shadow_lighting\overexposure.h" />
+    <ClInclude Include="Shadow_lighting\Overexposure_Test.h" />
+    <ClInclude Include="Shadow_lighting\RemoveLight.h" />
+    <ClInclude Include="Shadow_lighting\ShadowTest.h" />
     <ClInclude Include="Shadow_lighting\shadow_lighting.h" />
     <ClInclude Include="Util\general.h" />
     <ClInclude Include="Util\stopwatch.h" />

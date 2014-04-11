@@ -64,12 +64,13 @@ int main(int argc, char* argv[]){
 	timeKeeper.printTimePast();
 
 	// Shadow & Lighting
-	//Shadow_Lighting snl;
-	//shared_ptr<ImageRGB> snl_img = img;
-	//ImageRGB snl_img_rgb = *img;
+	Shadow_Lighting snl;
+	shared_ptr<ImageRGB> snl_img = img;
+	ImageRGB snl_img_rgb = *img;
 	try{
-	//	snl.checkForDefects(snl_img_rgb,2);
-	//	saveImg(snl_img_rgb, "snl.jpg");
+		vector<int> t = possibleBlobs[0].getCornerPoints();
+		snl.checkForDefects(snl_img_rgb, t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7]);
+		saveImg(snl_img_rgb, "snl.jpg");
 	} 
 	catch (ShadowExceptions sE){
 		if (sE.GetError() == "SHADOW"){
@@ -133,4 +134,5 @@ int main(int argc, char* argv[]){
 	cout << "Controller finished: ";
 	timeKeeper.printTimePast();
 
+	system("pause");
 }

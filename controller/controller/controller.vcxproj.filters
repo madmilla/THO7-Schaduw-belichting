@@ -60,15 +60,6 @@
     <ClCompile Include="Example.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shadow_lighting\colorspace.cpp">
-      <Filter>Source Files\Classes\Shadow and Lighting</Filter>
-    </ClCompile>
-    <ClCompile Include="Shadow_lighting\filter.cpp">
-      <Filter>Source Files\Classes\Shadow and Lighting</Filter>
-    </ClCompile>
-    <ClCompile Include="Shadow_lighting\overexposure.cpp">
-      <Filter>Source Files\Classes\Shadow and Lighting</Filter>
-    </ClCompile>
     <ClCompile Include="Shadow_lighting\shadow_lighting.cpp">
       <Filter>Source Files\Classes\Shadow and Lighting</Filter>
     </ClCompile>
@@ -138,6 +129,15 @@
     <ClCompile Include="OCR2\OpticalCharacterRecognition2.cpp">
       <Filter>Source Files\Classes\OCR2</Filter>
     </ClCompile>
+    <ClCompile Include="Shadow_lighting\Overexposure_Test.cpp">
+      <Filter>Source Files\Classes\Shadow and Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Shadow_lighting\RemoveLight.cpp">
+      <Filter>Source Files\Classes\Shadow and Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Shadow_lighting\ShadowTest.cpp">
+      <Filter>Source Files\Classes\Shadow and Lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -145,15 +145,6 @@
   <ItemGroup>
     <ClInclude Include="example.h">
       <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Shadow_lighting\colorspace.h">
-      <Filter>Header Files\Classes\Shadow and Lighting</Filter>
-    </ClInclude>
-    <ClInclude Include="Shadow_lighting\filter.h">
-      <Filter>Header Files\Classes\Shadow and Lighting</Filter>
-    </ClInclude>
-    <ClInclude Include="Shadow_lighting\overexposure.h">
-      <Filter>Header Files\Classes\Shadow and Lighting</Filter>
     </ClInclude>
     <ClInclude Include="Shadow_lighting\shadow_lighting.h">
       <Filter>Header Files\Classes\Shadow and Lighting</Filter>
@@ -256,6 +247,15 @@
     </ClInclude>
     <ClInclude Include="OCR2\OpticalCharacterRecognition2.h">
       <Filter>Header Files\Classes\OCR2</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow_lighting\Overexposure_Test.h">
+      <Filter>Header Files\Classes\Shadow and Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow_lighting\RemoveLight.h">
+      <Filter>Header Files\Classes\Shadow and Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow_lighting\ShadowTest.h">
+      <Filter>Header Files\Classes\Shadow and Lighting</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
