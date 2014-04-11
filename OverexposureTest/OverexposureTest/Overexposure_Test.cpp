@@ -140,7 +140,7 @@ void Overexposure_Test::Overexposure_Removal(shared_ptr<ImageRGB> img, int TopLe
 							}
 			
 							if ((*img->data(w, h).red >= 185) && (*img->data(w, h).green >= 185) && (*img->data(w, h).blue <= 50)){
-								tempRed += *img->data(w, h).red;
+								tempRed	+= *img->data(w, h).red;
 								tempGreen += *img->data(w, h).green;
 								tempBlue += *img->data(w, h).blue;
 								temp_aantal++;
