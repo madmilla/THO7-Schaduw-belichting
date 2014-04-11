@@ -146,6 +146,7 @@
     <ClCompile Include="Localization\BlobDetection.cpp" />
     <ClCompile Include="Localization\localization.cpp" />
     <ClCompile Include="Localization\YellowColorFilter.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Example.cpp" />
     <ClCompile Include="OCR1\OCRPatternMatching.cpp" />
     <ClCompile Include="OCR1\SplitLicensePlate.cpp" />
