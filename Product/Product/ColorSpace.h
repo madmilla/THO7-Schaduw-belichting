@@ -19,11 +19,12 @@ using namespace ImageLib;
 class ColorSpace{
 private:
 	//rgb to xyz
-	inline float* RGBtoXYZ(unsigned char R, unsigned char G, unsigned char B);
+	inline float* RGBtoLAB(unsigned char R, unsigned char G, unsigned char B);
 	//xyz to lab
 	inline float* XYZtoLAB(float X, float Y, float Z);
 	//xyz to rgb
 	inline float* XYZtoRGB(float X, float Y, float Z);
+	inline float* RGBtoXYZ(float R, float G, float B);
 	//lab to rgb
 	inline float* LABtoRGB(float  L, float  A, float B);
 
@@ -38,14 +39,15 @@ public:
 
 	//Convert rgb to xyz colorspace
 	void ToXYZ(std::shared_ptr<ImageRGB> image, int xmin, int ymin, int xmax, int ymax);
+	void ToRGBfromXYZ(std::shared_ptr<ImageRGB> image, int xmin, int ymin, int xmax, int ymax);
 	//convert xyz to lab
 	//
 	//Convert xyz to lab colorspace
-	void ToLAB(std::shared_ptr<ImageRGB> img, int xmin, int ymin, int xmax, int ymax);
+	void ToLAB(std::shared_ptr<ImageRGB> image, int xmin, int ymin, int xmax, int ymax);
 	//convert lab to rgb
 	//
 	//Convert lab to rgb, intern lab is converted to xyz and xyz to rgb
-	void ToRGB(std::shared_ptr<ImageRGB> img, int xmin, int ymin, int xmax, int ymax);
+	void ToRGB(std::shared_ptr<ImageRGB> image, int xmin, int ymin, int xmax, int ymax);
 
 
 

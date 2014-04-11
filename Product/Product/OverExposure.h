@@ -13,40 +13,42 @@
 
 #ifndef OVEREXPOSURE_H
 #define OVEREXPOSURE_H
-#include "Filter.h"		//Filter class is used for having 2 images 1 as input (image) and 1 as output(editedImage)
+#include "ImageLoader.h"
 #include <math.h>		//Used for the pow function
 
-class OverExposure : public Filter{
+using namespace ImageLib;
+
+class OverExposure{
 private:
 public:
 	//Constructor OverExposure
 	//
 	//Img is the input image, on this image the overexposure will be "removed".
 	//Img should have the first channel (0) as L range from 0 till 100
-	OverExposure(ImageRGB img);
+	OverExposure();
 
 	//Repair image overexposure
 	//
 	//This is an alternative way to adjust lightness this doesnt work yet as it should.
-	void M();
+	//void M();
 
 	//Threshold image
 	//
 	//This function will threshold the image and not repair it. 
 	//The image will be thresholded with the threshold param.
 	//This function will only be used for testing purposes
-	void ThresholdFunction(int threshold);
+	//void ThresholdFunction(int threshold);
 
 	//Repair using threshold
 	//
 	//This function will detect if a value is higher than the threshold.
 	//When a value is higher this will be repaired. 
 	//This makes sure the lightness will get lower, a high lightness will mean it is overexposed.
-	void ThresholdRepair(int threshold, int power);
-	void ThresholdRepair(int threshold, int power, int xmin, int ymin, int xmax, int ymax);
+	//void ThresholdRepair(int threshold, int power);
+	void ThresholdRepair(std::shared_ptr<ImageRGB> img, int threshold, int power, int xmin, int ymin, int xmax, int ymax);
 
 
-	void ThresholdRepairOpposite(int threshold, int lowest, int power);
-	void ThresholdRepairOpposite(int threshold, int lowest, int power, int xmin, int ymin, int xmax, int ymax);
+	//void ThresholdRepairOpposite(int threshold, int lowest, int power);
+	void ThresholdRepairOpposite(std::shared_ptr<ImageRGB> img, int threshold, int lowest, int power, int xmin, int ymin, int xmax, int ymax);
 };
 #endif

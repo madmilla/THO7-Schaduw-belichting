@@ -123,7 +123,6 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OverExposure.cpp" />
     <ClCompile Include="ShadowTest.cpp" />
-    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alg.h" />
