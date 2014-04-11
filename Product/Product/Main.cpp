@@ -93,8 +93,16 @@ void testert(std::shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int To
 	meanGBottomR /= 9;
 	meanBBottomR /= 9;
 		
+	/*float Rx = (float)*rgb_ptrs.red / 255;
+	float Gx = (float)*rgb_ptrs.green / 255;
+	float Bx = (float)*rgb_ptrs.blue / 255;
+	float test = max(Rx, Gx);
+	float K = 1 - max(test, Bx);
+	float Y = (1 - Bx - K) / (1 - K);
+	*/
 
 	//some easy and ugly max and min
+
 	int tempA = max(TopLeftX, TopRightX);
 	int tempB = max(BottomLeftX, BottomRightX);
 	int xmax  = max(tempA, tempB);
@@ -134,7 +142,7 @@ void testert(std::shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int To
 					Y = 1;
 					K = 0;
 				}
-				else if (K < 0.05 && Y < 0.1 && C < 0.1 && M < 0.1){
+				else if (K < 0.05 && Y < 0.1 && C < 0.1 && M < 0.1){ //wit
 					C = 0;
 					M = 0;
 					Y = 1;
@@ -146,25 +154,23 @@ void testert(std::shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int To
 					Y = 0;
 					K = 1;
 				}
-
-				else if (K < 0.5 && Y > 0.5){
-					C = 0;
-					M = 0;
-					Y = 1;
-					K = 0;
-				}
 				else if (K > 0.5 && Y < 0.2){
 					C = 0;
 					M = 0;
 					Y = 0;
 					K = 1;
 				}
+				else if (K < 0.4 && Y > 0.95){
+					C = 0;
+					M = 0;
+					Y = 1;
+					K = 0;
+				}
+			
 							
-				//cout << (int)*rgb_ptrs.red << "\n";
 			*rgb_ptrs.red = 255 * (1 - C) * (1 - K);
 			*rgb_ptrs.green = 255 * (1 - M) * (1 - K);
 			*rgb_ptrs.blue = 255 * (1 - Y) * (1 - K);
-			//cout << (int)*rgb_ptrs.red << "\n\n";
 		}
 	}
 }
