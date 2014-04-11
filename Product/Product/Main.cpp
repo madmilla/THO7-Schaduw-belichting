@@ -15,7 +15,7 @@ using namespace std;
 
 
 void testert(std::shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY, int value){
-	int meanRTopL = 0;
+	/*int meanRTopL = 0;
 	int meanGTopL = 0;
 	int meanBTopL = 0;
 
@@ -93,12 +93,13 @@ void testert(std::shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int To
 	meanGBottomR /= 9;
 	meanBBottomR /= 9;
 		
-	/*float Rx = (float)*rgb_ptrs.red / 255;
-	float Gx = (float)*rgb_ptrs.green / 255;
-	float Bx = (float)*rgb_ptrs.blue / 255;
-	float test = max(Rx, Gx);
-	float K = 1 - max(test, Bx);
-	float Y = (1 - Bx - K) / (1 - K);
+
+	//float Rx = (float)*rgb_ptrs.red / 255;
+	//float Gx = (float)*rgb_ptrs.green / 255;
+	//float Bx = (float)*rgb_ptrs.blue / 255;
+	//float test = max(Rx, Gx);
+	//float K = 1 - max(test, Bx);
+	//float Y = (1 - Bx - K) / (1 - K);
 	*/
 
 	//some easy and ugly max and min
@@ -117,57 +118,68 @@ void testert(std::shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int To
 	tempB = min(BottomLeftY, BottomRightY);
 	int ymin = min(tempA, tempB);
 
+	int yellowLastYValue = 0;
+	int yellowLastKValue = 0;
+	int blackLastYValue = 0;
+	int blackLastKValue = 0;
 	for (int y = ymin; y < ymax; y++){
 		for (int x = xmin; x < xmax; x++){
 			auto rgb_ptrs = image->data(x, y);
+
 			float Rx = (float)*rgb_ptrs.red / 255;
 			float Gx = (float)*rgb_ptrs.green / 255;
 			float Bx = (float)*rgb_ptrs.blue / 255;
+
 			float test = max(Rx, Gx);
 			float K = 1 - max(test, Bx);
 			float C = (1 - Rx-K) / (1-K);
 			float M = (1 - Gx-K) / (1-K);
 			float Y = (1 - Bx-K) / (1-K);
-			//if (Y < 0.5){
-				//Y = 1;
-			//}
+			/*if (Y < 0.5){
+				Y = 1;
+			}*/
 			/*if (Y > 0.5 && K < 0.5){
 				Y = 1;
 				K = 0;
 			*/
 			
-				if (K < 0.1 && Y > 0.1){
-					C = 0;
-					M = 0;
-					Y = 1;
-					K = 0;
-				}
-				else if (K < 0.05 && Y < 0.1 && C < 0.1 && M < 0.1){ //wit
-					C = 0;
-					M = 0;
-					Y = 1;
-					K = 0;
-				}
-				else if (K < 0.5 && Y < 0.1){
-					C = 0;
-					M = 0;
-					Y = 0;
-					K = 1;
-				}
-				else if (K > 0.5 && Y < 0.2){
-					C = 0;
-					M = 0;
-					Y = 0;
-					K = 1;
-				}
-				else if (K < 0.4 && Y > 0.95){
-					C = 0;
-					M = 0;
-					Y = 1;
-					K = 0;
-				}
-			
-							
+			if (K < 0.1 && Y > 0.1){ //geel
+				C = 0;
+				M = 0;
+				Y = 1;
+				K = 0;
+				yellowLastYValue = Y;
+				yellowLastKValue = K;
+			}
+			else if (K < 0.05 && Y < 0.1 && C < 0.1 && M < 0.1){ //wit
+				C = 0;
+				M = 0;
+				Y = 1;
+				K = 0;
+			}
+			else if (K < 0.5 && Y < 0.1){
+				C = 0;
+				M = 0;
+				Y = 0;
+				K = 1;
+				blackLastKValue = K;
+				blackLastYValue = Y;
+			}
+			else if (K > 0.5 && Y < 0.2){
+				C = 0;
+				M = 0;
+				Y = 0;
+				K = 1;
+				blackLastKValue = K;
+				blackLastYValue = Y;
+			}
+			else if (K < 0.4 && Y > 0.95){
+				C = 0;
+				M = 0;
+				Y = 1;
+				K = 0;
+			}
+
 			*rgb_ptrs.red = 255 * (1 - C) * (1 - K);
 			*rgb_ptrs.green = 255 * (1 - M) * (1 - K);
 			*rgb_ptrs.blue = 255 * (1 - Y) * (1 - K);
@@ -182,7 +194,7 @@ void testert(std::shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int To
 }*/
 
 int main(){
-	shared_ptr<ImageRGB> img = loadImg("license_plate_ex_12.jpg");
+	shared_ptr<ImageRGB> img = loadImg("license_plate_ex_5.jpg");
 	ImageRGB test(*img);
 	ShadowTest st;
 
@@ -194,7 +206,7 @@ int main(){
 	BaseTimer bt;
 	//bt.start();
 	Overexposure_Test OT;
-	if (OT.Overexposure_Detection(img, 663, 617, 3873, 1361, 601, 1201, 3625, 2305) == true){
+	if (OT.Overexposure_Detection(img, 145, 145, 605, 137, 155, 240, 605, 235) == true){
 		cout << "overexposure\n";
 		/*BaseTimer bt;
 		bt.start();
@@ -227,8 +239,8 @@ int main(){
 	cout << bt.elapsedSeconds();
 	bt.reset();
 	bt.start();
-	if (st.Shadow_Detection(img, 663, 617, 3873, 1361, 601, 1201, 3625, 2305) == true){
-		testert(img, 663, 617, 3873, 1361, 601, 1201, 3625, 2305, st.getDarkestFoundPixel());
+	if (st.Shadow_Detection(img, 145, 145, 605, 137, 155, 240, 605, 235) == true){
+		testert(img, 145, 145, 605, 137, 155, 240, 605, 235, st.getDarkestFoundPixel());
 		//testert(img, 1796, 1447, 2580, 1692, st.getDarkestFoundPixel());
 		cout << "shadow\n";
 		/*ColorSpace cs(test2);
