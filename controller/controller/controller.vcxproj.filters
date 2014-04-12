@@ -147,6 +147,9 @@
     <ClCompile Include="Shadow_lighting\Overexposure_Test.cpp">
       <Filter>Source Files\Classes\Shadow and Lighting</Filter>
     </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

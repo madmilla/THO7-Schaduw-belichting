@@ -29,10 +29,7 @@
 using namespace ImageLib;
 using namespace std;
 
-int main(int argc, char* argv[]){
-
-	//char * filename = (argv[1] == NULL) ? "" : argv[1];
-	char * filename = "8.jpg";
+void recognition(char* filename){
 	// Needed Defines
 	shared_ptr<ImageRGB> img;
 	General gen;
@@ -41,7 +38,7 @@ int main(int argc, char* argv[]){
 	try{
 		gen.Input_Control(filename); // Run checks for existance of the file, filetype and size.
 	}
-	catch (GeneralExceptions &gE){ return 0; } // If something happens here kill the program.
+	catch (GeneralExceptions &gE){} // If something happens here kill the program.
 	catch (std::bad_alloc &gE){ cerr << "Out of memory." << endl; }
 
 	cout << "General checks done: " << endl;
@@ -59,7 +56,9 @@ int main(int argc, char* argv[]){
 		ycf.filterImage(input);
 		int minBlobSize = (input.width() * input.height()) * 0.0015;
 		possibleBlobs = bd.Invoke(input, minBlobSize);
-		saveImg(input, "lokalisatie.jpg");
+		string localisation = filename;
+		localisation += "lokalisatie.jpg";
+		//saveImg(input, localisation.c_str());
 	}
 	catch (LocalizationExceptions &lE){ cout << "LOC ERROR" << endl; }
 
@@ -72,7 +71,9 @@ int main(int argc, char* argv[]){
 	try{
 		vector<int> t = possibleBlobs[0].getCornerPoints();
 		snl.checkForDefects(snl_img, t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7]);
-		saveImg(*snl_img, "snl.jpg");
+		string snl = filename;
+		snl += "snl.jpg";
+		saveImg(*snl_img, snl.c_str());
 	}
 	catch (ShadowExceptions sE){
 		if (sE.GetError() == "SHADOW"){
@@ -98,12 +99,14 @@ int main(int argc, char* argv[]){
 
 	try{
 		// Gets the img.
-		cout << "RNW" << snl_img->height() <<  endl;
+		cout << "RNW" << snl_img->height() << endl;
 		float tmpCoord[8] = { t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7] };
 		ImageCorrection::imageCorrection Correction = ImageCorrection::imageCorrection(tmpCoord);
 		rnw_result = Correction.correct(*snl_img.get());
 		// Rotates and fixes up the image and cut out the plate.
-		saveImg(*rnw_result, "RNW.jpg");
+		string rnw = filename;
+		rnw += "RNW.jpg";
+		saveImg(*rnw_result, rnw.c_str());
 	}
 	catch (DistortExceptions &lE){ cout << "RNW ERROR" << endl; }
 	cout << "Rotation done: ";
@@ -122,8 +125,8 @@ int main(int argc, char* argv[]){
 		//char recognition starts here
 		std::string kenteken = matching.RecognizeLicenseplate(characters);
 		std::cout << "LICENSE PLATE: " << kenteken << std::endl;
-		delete makeSplit;
-		*/
+		delete makeSplit;*/
+
 		//ORC 2
 		cout << "OCR2" << endl;
 		/* Controller lines: */
@@ -137,8 +140,24 @@ int main(int argc, char* argv[]){
 		cout << ex.what() << endl;
 	}
 	catch (DistortExceptions &lE){ cout << "OCR ERROR" << endl; }
-
 	cout << "Controller finished: ";
 	timeKeeper.printTimePast();
+}
 
+
+int main(int argc, char* argv[]){
+
+	//char * filename = (argv[1] == NULL) ? "" : argv[1];
+	char * filename = "license_plate_9.jpg";
+	//removed license_plate_ex_1.jpg because localisation couldn't find it and programm crashed.
+	char * filenames[] = { "license_plate_1.jpg", "license_plate_2.jpg", "license_plate_3.jpg", "license_plate_4.jpg", "license_plate_5.jpg", "license_plate_6.jpg", "license_plate_7.jpg", "license_plate_8.jpg", "license_plate_9.jpg", "license_plate_10.jpg", "license_plate_11.jpg", "license_plate_ex_2.jpg", "license_plate_ex_3.jpg", "license_plate_ex_4.png", "license_plate_ex_5.jpg" };
+	/*for (int i = 0; i < 15; i++){
+		
+		recognition(filenames[i]);
+	}*/
+	recognition(filename);
+	
+
+
+	system("pause");
 }
