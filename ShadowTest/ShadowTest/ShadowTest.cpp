@@ -5,7 +5,7 @@
 bool ShadowTest::Shadow_Detection(std::shared_ptr<ImageRGB> img, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY,
 								int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY){
 
-	int TopBigY, TopSmallY, BottomBigY, BottomSmallY;
+
 	//! Bounding Box
 	//! 
 	//! These if statements calculates the bounding box of the license plate.
@@ -25,12 +25,11 @@ bool ShadowTest::Shadow_Detection(std::shared_ptr<ImageRGB> img, int TopLeftX, i
 		BottomSmallY = BottomRightY;
 	}
 
-	int LicensePlateWidth = BottomRightX;
-	int LicensePlateHeight = BottomBigY - TopSmallY;
+	LicensePlateWidth = BottomRightX;
+	LicensePlateHeight = BottomBigY - TopSmallY;
 
-	int TotalPixels = LicensePlateHeight * LicensePlateWidth;
-	float percentage;
-	int ShadowPixels = 0;
+	TotalPixels = LicensePlateHeight * LicensePlateWidth;
+	ShadowPixels = 0;
 	auto rgb_ptrs = img->data(TopLeftX + 1, TopLeftY + 1);
 	auto Grayval = (*rgb_ptrs.red * 0.21) + (*rgb_ptrs.blue * 0.71) + (*rgb_ptrs.green * 0.07);
 	auto Darkest = Grayval;
@@ -64,12 +63,9 @@ bool ShadowTest::Shadow_Detection(std::shared_ptr<ImageRGB> img, int TopLeftX, i
 			
 			if (((rgb_ptrs.blue > rgb_ptrs.green) && (rgb_ptrs.blue > rgb_ptrs.red)) && (Grayval >= Darkest && Grayval <= YELLOWGRAY)){
 				ShadowPixels++;
-				img->at(x, y).red = 255;
-				img->at(x, y).green = 0;
-				img->at(x, y).blue = 0;
 			}
-			percentage = ((float)ShadowPixels / (float)TotalPixels) * 100;
-			if (percentage > 2.0f){	
+			Percentage = ((float)ShadowPixels / (float)TotalPixels) * 100;
+			if (Percentage > 2.0f){	
 				return true;
 			}
 		}
