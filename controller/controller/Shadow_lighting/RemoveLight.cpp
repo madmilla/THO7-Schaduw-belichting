@@ -96,12 +96,17 @@ void RemoveLight::CornerPointsValues(shared_ptr<ImageRGB> image, int TopLeftX, i
 	//float Y = (1 - Bx - K) / (1 - K);
 
 	int meanR = (meanRBottomL + meanRBottomR + meanRTopL + meanRTopR) / 4;
-	int meanG = (meanGBottomL + meanGBottomR + meanBTopL + meanBTopR) / 4;
-	int meanB = (meanBBottomL + meanBBottomR + meanBTopL + meanGTopR) / 4;
+	int meanG = (meanGBottomL + meanGBottomR + meanGTopL + meanGTopR) / 4;
+	int meanB = (meanBBottomL + meanBBottomR + meanBTopL + meanBTopR) / 4;
 
 	float meanRx = (float)meanR / 255;
 	float meanGx = (float)meanG / 255;
 	float meanBx = (float)meanB / 255;
+
+	cout << "meanR: " << meanR << "\n";
+	cout << "meanG: " << meanG << "\n";
+	cout << "meanB: " << meanB << "\n";
+
 
 	float test = max(meanRx, meanGx);
 	meanK = 1 - max(test, meanBx);
@@ -152,29 +157,35 @@ void RemoveLight::ApplyShadowFiltering(shared_ptr<ImageRGB> image, int TopLeftX,
 			float M = (1 - Gx - K) / (1 - K);
 			float Y = (1 - Bx - K) / (1 - K);
 
-			if (K > meanK - meanK / 2 && K < meanK + meanK / 4*3 && Y > meanY - meanY / 10){ //works decent but should be tweaked a little
-				C = 1;
+			// if (K > meanK + meanK/10 && K < meanK + meanK/4*3 && Y > meanY - meanY / 10){//works decent but should be tweaked a little
+			if (K > meanK + meanK / 10 && K < meanK + 0.3 - meanK / 3 && Y > meanY - 0.1){
+				C = 1; 
 				M = 0;
-				Y = 0;
+				Y = 0;	 
 				K = 0;
 			}
 
-			//these if statements below will almost scale all pixels black or yellow works pretty well
-			else if (K > meanK + meanK / 2){
+			else if (Y < 0.1 && K > 0.05 && K < meanK && M < 0.1 && C < 0.1){ //overexposure gray letter 
 				C = 0;
 				M = 0;
 				Y = 0;
 				K = 1;
 			}
-			else if (Y > meanY - meanY / 4){
+
+			//these if statements below will almost scale all pixels black or yellow works pretty well
+			else if (K > meanK + 0.2 - meanK / 5){ //make black -> was black
+				C = 0;
+				M = 0;
+				Y = 0;
+				K = 1;
+			}
+			else if (Y > meanY - meanY / 2){ //make white -> was yellow
 				C = 0;
 				M = 0;
 				Y = 0;
 				K = 0;
 			}
-
-		
-
+			 
 			*rgb_ptrs.red = 255 * (1 - C) * (1 - K);
 			*rgb_ptrs.green = 255 * (1 - M) * (1 - K);
 			*rgb_ptrs.blue = 255 * (1 - Y) * (1 - K);

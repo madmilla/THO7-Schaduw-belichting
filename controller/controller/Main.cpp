@@ -117,7 +117,7 @@ void recognition(char* filename){
 	// OCR 
 	try{
 		/*//Finds some letters*/
-		cout << "OCR" << endl;
+		/*cout << "OCR" << endl;
 		OCRPatternMatching matching;
 		std::cout << "Start recognition of " << filename << std::endl;
 		SplitLicensePlate* makeSplit = new SplitLicensePlate(*rnw_result);
@@ -126,15 +126,15 @@ void recognition(char* filename){
 		//char recognition starts here
 		std::string kenteken = matching.RecognizeLicenseplate(characters);
 		std::cout << "LICENSE PLATE: " << kenteken << std::endl;
-		delete makeSplit;
+		delete makeSplit;*/
 		
 		//ORC 2
 		cout << "OCR2" << endl;
-		/* Controller lines: 
+		/* Controller lines: */
 		OpticalCharacterRecognition2 OCR2 = OpticalCharacterRecognition2();
 		SegmentedImages Characters = OCR2.SegmentateImage(*rnw_result);
 		std::string Licence = OCR2.ReadLicencePlate(Characters);
-		cout << Licence << endl; */
+		cout << Licence << endl; 
 		//Send back the found letters.
 	}
 	catch (const std::exception& ex) {
@@ -152,10 +152,9 @@ int main(int argc, char* argv[]){
 	char * filename = "license_plate_9.jpg";
 	//removed license_plate_ex_1.jpg because localisation couldn't find it and programm crashed.
 	char * filenames[] = { "license_plate_1.jpg", "license_plate_2.jpg", "license_plate_3.jpg", "license_plate_4.jpg", "license_plate_5.jpg", "license_plate_6.jpg", "license_plate_7.jpg", "license_plate_8.jpg", "license_plate_9.jpg", "license_plate_10.jpg", "license_plate_11.jpg", "license_plate_ex_2.jpg", "license_plate_ex_3.jpg", "license_plate_ex_4.png", "license_plate_ex_5.jpg" };
-	/*for (int i = 0; i < 15; i++){
-		
+	for (int i = 0; i < 15; i++){	
 		recognition(filenames[i]);
-	}*/
+	}
 	recognition(filename);
 	
 
