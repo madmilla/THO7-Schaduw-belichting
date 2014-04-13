@@ -13,16 +13,17 @@
 #include "Shadow_Lighting/shadow_lighting.h"
 #include "Rotation/imageCorrection.h"
 
-//#include "OCR1/OCRPatternMatching.h"  TRASH
-//#include "OCR1/SplitLicensePlate.h"	TRASH
+#include "OCR1/OCRPatternMatching.h"
+#include "OCR1/SplitLicensePlate.h"
 
 #include "OCR2/FileData.h"
 #include "OCR2/OpticalCharacterRecognition2.h"
 
 	// File: Main.cpp
 	// @Author Lars Veenendaal 1633223
+	// 0.5 - Implementation of OCR 1 & OCR 2.
 	// 0.4 - Implementation Rotation & Cleaned up code and file structure.
-	// 0.3 - Implementation Localization & Shadow
+	// 0.3 - Implementation Localization & Shadow and lighting.
 	// 0.2 - General testing added.
 	// 0.1 - Skeleton setup.
 
@@ -115,8 +116,8 @@ void recognition(char* filename){
 
 	// OCR 
 	try{
-		//Finds some letters
-		/*cout << "OCR" << endl;
+		/*//Finds some letters*/
+		cout << "OCR" << endl;
 		OCRPatternMatching matching;
 		std::cout << "Start recognition of " << filename << std::endl;
 		SplitLicensePlate* makeSplit = new SplitLicensePlate(*rnw_result);
@@ -125,15 +126,15 @@ void recognition(char* filename){
 		//char recognition starts here
 		std::string kenteken = matching.RecognizeLicenseplate(characters);
 		std::cout << "LICENSE PLATE: " << kenteken << std::endl;
-		delete makeSplit;*/
-
+		delete makeSplit;
+		
 		//ORC 2
 		cout << "OCR2" << endl;
-		/* Controller lines: */
+		/* Controller lines: 
 		OpticalCharacterRecognition2 OCR2 = OpticalCharacterRecognition2();
 		SegmentedImages Characters = OCR2.SegmentateImage(*rnw_result);
 		std::string Licence = OCR2.ReadLicencePlate(Characters);
-		cout << Licence << endl;
+		cout << Licence << endl; */
 		//Send back the found letters.
 	}
 	catch (const std::exception& ex) {

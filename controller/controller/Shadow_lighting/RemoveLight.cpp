@@ -9,10 +9,10 @@ void RemoveLight::CornerPointsValues(shared_ptr<ImageRGB> image, int TopLeftX, i
 	int meanGTopL = 0;
 	int meanBTopL = 0;
 
-
-	for (int y = TopLeftY; y < TopLeftY + 3; y++){
-		auto samples = image->data(TopLeftX, y);
-		for (int x = TopLeftX; x < TopLeftX + 3; x++){
+	int offset = (BottomLeftY - TopLeftY) / 10;
+	for (int y = TopLeftY + offset; y < TopLeftY + offset + 3; y++){
+		auto samples = image->data(TopLeftX + offset, y);
+		for (int x = TopLeftX + offset; x < TopLeftX + offset + 3; x++){
 			meanRTopL += *samples.red;
 			meanGTopL += *samples.green;
 			meanBTopL += *samples.blue;
@@ -25,33 +25,13 @@ void RemoveLight::CornerPointsValues(shared_ptr<ImageRGB> image, int TopLeftX, i
 	meanGTopL /= 9;
 	meanBTopL /= 9;
 
-	int meanRTopR = 0;
-	int meanGTopR = 0;
-	int meanBTopR = 0;
-
-
-	for (int y = TopRightY; y < TopLeftY + 3; y++){
-		auto samples = image->data(TopRightX, y);
-		for (int x = TopRightX; x < TopLeftX + 3; x++){
-			meanRTopL += *samples.red;
-			meanGTopL += *samples.green;
-			meanBTopL += *samples.blue;
-			samples.red--;
-			samples.green--;
-			samples.blue--;
-		}
-	}
-	meanRTopR /= 9;
-	meanGTopR /= 9;
-	meanBTopR /= 9;
-
 	int meanRBottomL = 0;
 	int meanGBottomL = 0;
 	int meanBBottomL = 0;
 
-	for (int y = BottomLeftY; y > BottomLeftY - 3; y--){
-		auto samples = image->data(BottomLeftX,y);
-		for (int x = BottomLeftX; x < BottomLeftX + 3; x++){
+	for (int y = BottomLeftY - offset; y > BottomLeftY - offset - 3; y--){
+		auto samples = image->data(BottomLeftX + offset, y);
+		for (int x = BottomLeftX + offset; x < BottomLeftX + offset + 3; x++){
 			meanRBottomL += *samples.red;
 			meanGBottomL += *samples.green;
 			meanBBottomL += *samples.blue;
@@ -64,13 +44,37 @@ void RemoveLight::CornerPointsValues(shared_ptr<ImageRGB> image, int TopLeftX, i
 	meanGBottomL /= 9;
 	meanBBottomL /= 9;
 
+
+
+	int meanRTopR = 0;
+	int meanGTopR = 0;
+	int meanBTopR = 0;
+
+	offset = (BottomRightY - TopRightY) / 10;
+
+	for (int y = TopRightY + offset; y < TopRightY+ offset + 3; y++){
+		auto samples = image->data(TopRightX - offset, y);
+		for (int x = TopRightX - offset; x > TopRightX - offset - 3; x--){
+			meanRTopR += *samples.red;
+			meanGTopR += *samples.green;
+			meanBTopR += *samples.blue;
+			samples.red--;
+			samples.green--;
+			samples.blue--;
+		}
+	}
+	meanRTopR /= 9;
+	meanGTopR /= 9;
+	meanBTopR /= 9;
+
+
 	int meanRBottomR = 0;
 	int meanGBottomR = 0;
 	int meanBBottomR = 0;
 
-	for (int y = BottomRightY; y > BottomRightY - 3; y--){
-		auto samples = image->data(BottomRightX, y);
-		for (int x = BottomRightX; x < BottomRightX + 3; x++){
+	for (int y = BottomRightY - offset; y > BottomRightY - offset - 3; y--){
+		auto samples = image->data(BottomRightX - offset, y);
+		for (int x = BottomRightX - offset; x > BottomRightX - offset - 3; x--){
 			meanRBottomR += *samples.red;
 			meanGBottomR += *samples.green;
 			meanBBottomR += *samples.blue;
@@ -106,6 +110,9 @@ void RemoveLight::CornerPointsValues(shared_ptr<ImageRGB> image, int TopLeftX, i
 	meanY = (1 - meanBx - meanK) / (1 - meanK);
 	cout << "meanY :" << meanY << "\n";
 	cout << "meanK :" << meanK << "\n";
+	if (meanK < 0.1){
+		meanK = 0.1;
+	}
 }
 
 void RemoveLight::ApplyShadowFiltering(shared_ptr<ImageRGB> image, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY){
@@ -145,15 +152,15 @@ void RemoveLight::ApplyShadowFiltering(shared_ptr<ImageRGB> image, int TopLeftX,
 			float M = (1 - Gx - K) / (1 - K);
 			float Y = (1 - Bx - K) / (1 - K);
 
-			if (K > meanK - meanK / 2 && K < meanK + meanK / 10 && Y > meanY - meanY / 10){
-				C = 0;
-				M = 1;
+			if (K > meanK - meanK / 2 && K < meanK + meanK / 4*3 && Y > meanY - meanY / 10){ //works decent but should be tweaked a little
+				C = 1;
+				M = 0;
 				Y = 0;
 				K = 0;
 			}
 
-			//these if statements below will almost scale all pixels black or yellow
-			else if (K > meanK - meanK / 2){
+			//these if statements below will almost scale all pixels black or yellow works pretty well
+			else if (K > meanK + meanK / 2){
 				C = 0;
 				M = 0;
 				Y = 0;
@@ -166,44 +173,7 @@ void RemoveLight::ApplyShadowFiltering(shared_ptr<ImageRGB> image, int TopLeftX,
 				K = 0;
 			}
 
-			/*else if (K < 0.1 && Y > 0.1){ //geel
-				yellowLastYValue = Y;
-				yellowLastKValue = K;
-				C = 0;
-				M = 0;
-				Y = 1;
-				K = 0;
-			}
-			else if (K < 0.05 && Y < 0.1 && C < 0.1 && M < 0.1){ //wit
-				C = 0;
-				M = 0;
-				Y = 1;
-				K = 0;
-			}
-			else if (Y < 0.2){ //zwart
-				blackLastKValue = K;
-				blackLastYValue = Y;
-				C = 0;
-				M = 0;
-				Y = 0;
-				K = 1;
-			}
-			else if (K > 0.8){
-				blackLastKValue = K;
-				blackLastYValue = Y;
-				C = 0;
-				M = 0;
-				Y = 0;
-				K = 1;
-			}
-			else if (Y > 0.9){
-				yellowLastYValue = Y;
-				yellowLastKValue = K;
-				C = 0;
-				M = 0;
-				Y = 1;
-				K = 0;
-			}*/
+		
 
 			*rgb_ptrs.red = 255 * (1 - C) * (1 - K);
 			*rgb_ptrs.green = 255 * (1 - M) * (1 - K);
