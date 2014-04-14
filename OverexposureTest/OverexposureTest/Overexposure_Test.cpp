@@ -30,7 +30,7 @@ bool Overexposure_Test::Overexposure_Detection(shared_ptr<ImageRGB> img, int Top
 
 	/**
 	*	Making a bounding box with the coordinates of the license plate.
-	*	Check what the smalles top corner is.
+	*	Check what the smalles top Y value is.
 	*/
 	if (Top_Left_Y < Top_Right_Y){
 		Small_Y = Top_Left_Y;
@@ -39,7 +39,7 @@ bool Overexposure_Test::Overexposure_Detection(shared_ptr<ImageRGB> img, int Top
 		Small_Y = Top_Right_Y;
 	}
 	
-	/** Check what the biggest bottom cornet is. */
+	/** Check what the biggest bottom Y value is. */
 	if (Bottom_Left_Y > Bottom_Right_Y){
 		Big_Y = Bottom_Left_Y;
 	}
@@ -52,7 +52,7 @@ bool Overexposure_Test::Overexposure_Detection(shared_ptr<ImageRGB> img, int Top
 
 	/**
 	*	1 for loop is for the height of the license plate and the other is for the width of the license plate.
-	*	At the edges of the license plate we take 5 pixels less so that code beyond won't get use values outside the license plate.
+	*	from the edges of the license plate we take 5 pixels less so that code beyond won't get use values outside the license plate.
 	*/ 
 	for (int y = Small_Y + 5; y < Big_Y - 5; y++){
 		for (int x = Top_Left_X + 5; x < Bottom_Right_X - 5; x++){
@@ -96,7 +96,7 @@ void Overexposure_Test::Overexposure_Removal(shared_ptr<ImageRGB> img, int Top_L
 	
 	/**
 	*	Making a bounding box with the coordinates of the license plate.
-	*	Check what the smalles top corner is.
+	*	Check what the smalles top Y value is.
 	*/
 	if (Top_Left_Y < Top_Right_Y){
 		Small_Y = Top_Left_Y;
@@ -105,7 +105,7 @@ void Overexposure_Test::Overexposure_Removal(shared_ptr<ImageRGB> img, int Top_L
 		Small_Y = Top_Right_Y;
 	}
 
-	/** Check what the biggest bottom cornet is. */
+	/** Check what the biggest bottom Y value is. */
 	if (Bottom_Left_Y > Bottom_Right_Y){
 		Big_Y = Bottom_Left_Y;
 	}
@@ -115,7 +115,7 @@ void Overexposure_Test::Overexposure_Removal(shared_ptr<ImageRGB> img, int Top_L
 
 	/**
 	*	1 for loop is for the height of the license plate and the other is for the width of the license plate. 
-	*	At the edges of the license plate we take 5 pixels less so that code beyond won't use values outside the license plate.
+	*	from the edges of the license plate we take 5 pixels less so that code beyond won't use values outside the license plate.
 	*/
 	for (int y = Small_Y + 5; y < Big_Y - 5; y++){
 		for (int x = Top_Left_X + 5; x < Bottom_Right_X - 5; x++){
@@ -152,7 +152,7 @@ void Overexposure_Test::Overexposure_Removal(shared_ptr<ImageRGB> img, int Top_L
 								temp_Blue_Black = *img->data(w, h).blue - *img->data(w, h).green;
 							}
 
-							/** The minus of the collors must be < 30 and the must be < 245 then we know ut is gray. */
+							/** The minus of the collors must be < 30 and the red must be < 245 then we know ut is gray. */
 							if ((temp_Red_Black < 30) && (temp_Blue_Black < 30) && (*img->data(w, h).red < 245)){
 								/** If the pixel is gray then set the pixel black. */
 								img->at(w, h).red = 0;
