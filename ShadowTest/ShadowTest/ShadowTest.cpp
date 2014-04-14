@@ -25,6 +25,9 @@ bool ShadowTest::Shadow_Detection(std::shared_ptr<ImageRGB> img, int TopLeftX, i
 		BottomSmallY = BottomRightY;
 	}
 
+	//! Some needed variables
+	//!
+	//! Set the needed variables to the right values.
 	LicensePlateWidth = BottomRightX;
 	LicensePlateHeight = BottomBigY - TopSmallY;
 
