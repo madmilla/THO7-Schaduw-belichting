@@ -25,7 +25,6 @@ Overexposure_Test::Overexposure_Test(){
 }
 
 bool Overexposure_Test::Overexposure_Detection(shared_ptr<ImageRGB> img, int Top_Left_X, int Top_Left_Y, int Top_Right_X, int Top_Right_Y, int Bottom_Left_X, int Bottom_Left_Y, int Bottom_Right_X, int Bottom_Right_Y){
-	//shared_ptr<ImageRGB> editedImg = make_shared<ImageRGB>(img->width(), img->height());
 
 	//! Making a bounding box with the coordinates of the license plate.
 	//! check what the smalles top corner is.
@@ -69,7 +68,6 @@ bool Overexposure_Test::Overexposure_Detection(shared_ptr<ImageRGB> img, int Top
 								Overexposed_pixels++;
 								count_Pix = true;
 							}	
-							
 						}
 					}
 				}
@@ -162,32 +160,6 @@ void Overexposure_Test::Overexposure_Removal(shared_ptr<ImageRGB> img, int Top_L
 					count_Pixels = 0;
 				}
 			}
-		}
-	}
-	saveImg(*img, "test.jpg");
-}
-
-void Overexposure_Test::OverExposure_T(std::shared_ptr<ImageRGB> img, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY, int BottomLeftX, int BottomLeftY, int BottomRightX, int BottomRightY){
-	/*if (TopLeftY < TopRightY){
-		SmallY = TopLeftY;
-	}
-	else{
-		SmallY = TopRightY;
-	}
-
-	if (BottomLeftY > BottomRightY){
-		BigY = BottomLeftY;
-	}
-	else{
-		BigY = BottomRightY;
-	}*/
-
-	//TotalPixels = (BottomRightX - TopLeftX) * (BigY - SmallY);
-	for (float y = 1471; y > 1312; y -= 0.185){
-		for (int x = 1378; x < 2247; x++){
-			img->at(x, y).red = 255;
-			img->at(x, y).green = 0;
-			img->at(x, y).blue = 0;
 		}
 	}
 	saveImg(*img, "test.jpg");
