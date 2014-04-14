@@ -11,12 +11,12 @@ int main(){
 	BaseTimer bt;
 
 
-	shared_ptr<ImageRGB> img = loadImg("license_plate_ex_5.bmp");
+	shared_ptr<ImageRGB> img = loadImg("SH-HR-91.jpg");
 
 	bt.start();
 	Overexposure_Test OT;
-	//cout << OT.Overexposure_Detection(img, 187, 213, 265, 214, 187, 229, 265, 230) << '\n';
-	OT.Overexposure_Removal(img, 145, 145, 605, 137, 155, 240, 605, 235);
+	cout << OT.Overexposure_Detection(img, 1353, 989, 2189, 796, 1344, 1181, 2147, 939) << '\n';
+	//OT.Overexposure_Removal(img, 1353, 989, 2189, 796, 1344, 1181, 2147, 939);
 
 	/*if (OT.Overexposure_Detection(img, 145, 145, 605, 137, 155, 240, 605, 235)){
 		OT.Overexposure_Removal(img, 145, 145, 605, 137, 155, 240, 605, 235);
