@@ -1,4 +1,4 @@
-// Arthur van der Weiden
+//!@author Arthur van der Weiden 1619815
 
 #ifndef SHADOW_TEST
 #define SHADOW_TEST
@@ -21,7 +21,7 @@ private:
 
 public:
 	//! Constructor
-	//!
+	//! 
 	//! Constructs an object of the ShadowTest type
 	ShadowTest(){}
 	

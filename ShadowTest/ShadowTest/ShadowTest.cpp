@@ -1,5 +1,4 @@
-// Arthur van der Weiden
-
+//!@author Arthur van der Weiden 1619815
 #include "ShadowTest.h"
 
 bool ShadowTest::Shadow_Detection(std::shared_ptr<ImageRGB> img, int TopLeftX, int TopLeftY, int TopRightX, int TopRightY,
