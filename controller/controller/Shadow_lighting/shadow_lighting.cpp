@@ -21,15 +21,18 @@ void Shadow_Lighting::checkForDefects(shared_ptr<ImageRGB> img, int TopLeftX, in
 		cout << "Overexposure\n";
 		//rl.ApplyLightingFiltering(img, TopLeftX, TopLeftY, TopRightX, TopRightY, BottomLeftX, BottomLeftY, BottomRightX, BottomRightY);
 		if (adjusted != true){
-			rl.ApplyShadowFiltering(img, TopLeftX, TopLeftY, TopRightX, TopRightY, BottomLeftX, BottomLeftY, BottomRightX, BottomRightY);
-			adjusted = true;
+			//rl.ApplyShadowFiltering(img, TopLeftX, TopLeftY, TopRightX, TopRightY, BottomLeftX, BottomLeftY, BottomRightX, BottomRightY);
+			//adjusted = true;
 		}
 	}
 	ShadowTest st;
 	if (st.Shadow_Detection(img, TopLeftX, TopLeftY, TopRightX, TopRightY, BottomLeftX, BottomLeftY, BottomRightX, BottomRightY) == true){
 		cout << "Shadow\n";
 		if (adjusted != true){
-			rl.ApplyShadowFiltering(img, TopLeftX, TopLeftY, TopRightX, TopRightY, BottomLeftX, BottomLeftY, BottomRightX, BottomRightY);
+			cout << st.getDarkestFoundPixelR() << "\n";
+			cout << st.getDarkestFoundPixelG() << "\n";
+			cout << st.getDarkestFoundPixelB() << "\n";
+			rl.ApplyShadowFiltering(img, TopLeftX, TopLeftY, TopRightX, TopRightY, BottomLeftX, BottomLeftY, BottomRightX, BottomRightY,st.getDarkestFoundPixelR(), st.getDarkestFoundPixelG(), st.getDarkestFoundPixelB());
 			adjusted = true;
 		}
 	}

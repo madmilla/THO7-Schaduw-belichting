@@ -11,7 +11,9 @@
 // File: shadow_lighting.h
 // @Author Lars Veenendaal 1633223
 // @Author Arthur van der Weiden
-// 0.2 - Migration of tests,
+// @Author Jeroen Huisen
+// 0.3- Migration of seperated tests
+// 0.2 - Migration of tests
 // 0.1 - Skeleton setup
 /*
 	Still holds nothing.
