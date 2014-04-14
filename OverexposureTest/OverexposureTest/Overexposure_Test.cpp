@@ -58,9 +58,9 @@ bool Overexposure_Test::Overexposure_Detection(shared_ptr<ImageRGB> img, int Top
 			if (sum >= 255){
 				percentage = ((float)Overexposed_pixels / (float)TotalPixels) * 100;
 
-				/*if (percentage >= 1){
+				if (percentage >= 1){
 					return true;
-				}*/
+				}
 				
 				for (int h = y - 5; h < y + 5; h++){
 					for (int w = x - 5; w < x + 5; w++){
@@ -69,9 +69,7 @@ bool Overexposure_Test::Overexposure_Detection(shared_ptr<ImageRGB> img, int Top
 								Overexposed_pixels++;
 								count_Pix = true;
 							}	
-							img->at(w, h).red = 255;
-							img->at(w, h).green = 0;
-							img->at(w, h).blue = 0;
+							
 						}
 					}
 				}
@@ -79,8 +77,6 @@ bool Overexposure_Test::Overexposure_Detection(shared_ptr<ImageRGB> img, int Top
 			count_Pix = false;
 		}
 	}
-	cout << percentage << '\n';
-	saveImg(*img, "test.jpg");
 	return false;
 }
 
